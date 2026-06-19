@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>AGGrid.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AGGrid.html">AGGrid</a><ul class='methods'><li data-type='method'><a href="AGGrid.html#addComponent">addComponent</a></li><li data-type='method'><a href="AGGrid.html#addRecord">addRecord</a></li><li data-type='method'><a href="AGGrid.html#addRecords">addRecords</a></li><li data-type='method'><a href="AGGrid.html#clear">clear</a></li><li data-type='method'><a href="AGGrid.html#clearSelection">clearSelection</a></li><li data-type='method'><a href="AGGrid.html#columnShow">columnShow</a></li><li data-type='method'><a href="AGGrid.html#deleteRow">deleteRow</a></li><li data-type='method'><a href="AGGrid.html#deleteRowIndex">deleteRowIndex</a></li><li data-type='method'><a href="AGGrid.html#deleteSelectedRows">deleteSelectedRows</a></li><li data-type='method'><a href="AGGrid.html#deselectAll">deselectAll</a></li><li data-type='method'><a href="AGGrid.html#destroy">destroy</a></li><li data-type='method'><a href="AGGrid.html#disable">disable</a></li><li data-type='method'><a href="AGGrid.html#enable">enable</a></li><li data-type='method'><a href="AGGrid.html#getAllRows">getAllRows</a></li><li data-type='method'><a href="AGGrid.html#getFirstRow">getFirstRow</a></li><li data-type='method'><a href="AGGrid.html#getLastRow">getLastRow</a></li><li data-type='method'><a href="AGGrid.html#getNumberOfRows">getNumberOfRows</a></li><li data-type='method'><a href="AGGrid.html#getRowAtIndex">getRowAtIndex</a></li><li data-type='method'><a href="AGGrid.html#getSelectedRow">getSelectedRow</a></li><li data-type='method'><a href="AGGrid.html#getSelectedRowIndex">getSelectedRowIndex</a></li><li data-type='method'><a href="AGGrid.html#getSelectedRowIndexes">getSelectedRowIndexes</a></li><li data-type='method'><a href="AGGrid.html#getSelectedRows">getSelectedRows</a></li><li data-type='method'><a href="AGGrid.html#highlightRows">highlightRows</a></li><li data-type='method'><a href="AGGrid.html#isEmpty">isEmpty</a></li><li data-type='method'><a href="AGGrid.html#multiSelect">multiSelect</a></li><li data-type='method'><a href="AGGrid.html#noRowSelection">noRowSelection</a></li><li data-type='method'><a href="AGGrid.html#numberOfSelectedRows">numberOfSelectedRows</a></li><li data-type='method'><a href="AGGrid.html#rowStyleFunction">rowStyleFunction</a></li><li data-type='method'><a href="AGGrid.html#selectId">selectId</a></li><li data-type='method'><a href="AGGrid.html#setDragFunction">setDragFunction</a></li><li data-type='method'><a href="AGGrid.html#setOnRowDoubleClicked">setOnRowDoubleClicked</a></li><li data-type='method'><a href="AGGrid.html#setOnSelectionChanged">setOnSelectionChanged</a></li><li data-type='method'><a href="AGGrid.html#setRowData">setRowData</a></li><li data-type='method'><a href="AGGrid.html#show">show</a></li><li data-type='method'><a href="AGGrid.html#updateSelectedRecord">updateSelectedRecord</a></li><li data-type='method'><a href="AGGrid.html#.addGrid">addGrid</a></li><li data-type='method'><a href="AGGrid.html#.date">date</a></li><li data-type='method'><a href="AGGrid.html#.dateTime">dateTime</a></li><li data-type='method'><a href="AGGrid.html#.newGridContext">newGridContext</a></li><li data-type='method'><a href="AGGrid.html#.numericFormat">numericFormat</a></li><li data-type='method'><a href="AGGrid.html#.popAllGridContexts">popAllGridContexts</a></li><li data-type='method'><a href="AGGrid.html#.popGridContext">popGridContext</a></li><li data-type='method'><a href="AGGrid.html#.time">time</a></li></ul></li><li><a href="DateTimeUtils.html">DateTimeUtils</a><ul class='methods'><li data-type='method'><a href="DateTimeUtils.html#.addDays">addDays</a></li><li data-type='method'><a href="DateTimeUtils.html#.addHours">addHours</a></li><li data-type='method'><a href="DateTimeUtils.html#.addHours">addHours</a></li><li data-type='method'><a href="DateTimeUtils.html#.addMinutes">addMinutes</a></li><li data-type='method'><a href="DateTimeUtils.html#.addMinutes">addMinutes</a></li><li data-type='method'><a href="DateTimeUtils.html#.addMonths">addMonths</a></li><li data-type='method'><a href="DateTimeUtils.html#.addYears">addYears</a></li><li data-type='method'><a href="DateTimeUtils.html#.create">create</a></li><li data-type='method'><a href="DateTimeUtils.html#.createDate">createDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.dateOnlyEpoch">dateOnlyEpoch</a></li><li data-type='method'><a href="DateTimeUtils.html#.dateToStd">dateToStd</a></li><li data-type='method'><a href="DateTimeUtils.html#.diffMinutes">diffMinutes</a></li><li data-type='method'><a href="DateTimeUtils.html#.displayEpochToEpoch">displayEpochToEpoch</a></li><li data-type='method'><a href="DateTimeUtils.html#.epochFromDateAndTime">epochFromDateAndTime</a></li><li data-type='method'><a href="DateTimeUtils.html#.epochToDisplayEpoch">epochToDisplayEpoch</a></li><li data-type='method'><a href="DateTimeUtils.html#.formatDate">formatDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.formatDateLong">formatDateLong</a></li><li data-type='method'><a href="DateTimeUtils.html#.formatDateTime">formatDateTime</a></li><li data-type='method'><a href="DateTimeUtils.html#.getDate">getDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.getLocalTimezoneLongText">getLocalTimezoneLongText</a></li><li data-type='method'><a href="DateTimeUtils.html#.getLocalTimezoneShortText">getLocalTimezoneShortText</a></li><li data-type='method'><a href="DateTimeUtils.html#.getTime">getTime</a></li><li data-type='method'><a href="DateTimeUtils.html#.getTimeZoneOffsetMs">getTimeZoneOffsetMs</a></li><li data-type='method'><a href="DateTimeUtils.html#.localZone">localZone</a></li><li data-type='method'><a href="DateTimeUtils.html#.newYmdhm">newYmdhm</a></li><li data-type='method'><a href="DateTimeUtils.html#.now">now</a></li><li data-type='method'><a href="DateTimeUtils.html#.stdToDate">stdToDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.timeOnlyEpoch">timeOnlyEpoch</a></li><li data-type='method'><a href="DateTimeUtils.html#.toDate">toDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.toEpoch">toEpoch</a></li><li data-type='method'><a href="DateTimeUtils.html#.toIntDate">toIntDate</a></li><li data-type='method'><a href="DateTimeUtils.html#.toIntTime">toIntTime</a></li><li data-type='method'><a href="DateTimeUtils.html#.toMilliseconds">toMilliseconds</a></li><li data-type='method'><a href="DateTimeUtils.html#.toYmdhm">toYmdhm</a></li></ul></li><li><a href="DateUtils.html">DateUtils</a><ul class='methods'><li data-type='method'><a href="DateUtils.html#.SQLtoInt">SQLtoInt</a></li><li data-type='method'><a href="DateUtils.html#.calendar">calendar</a></li><li data-type='method'><a href="DateUtils.html#.dateAddDays">dateAddDays</a></li><li data-type='method'><a href="DateUtils.html#.dateToInt">dateToInt</a></li><li data-type='method'><a href="DateUtils.html#.day">day</a></li><li data-type='method'><a href="DateUtils.html#.dayOfWeek">dayOfWeek</a></li><li data-type='method'><a href="DateUtils.html#.dayOfWeekName">dayOfWeekName</a></li><li data-type='method'><a href="DateUtils.html#.daysDifference">daysDifference</a></li><li data-type='method'><a href="DateUtils.html#.detectDateFormat">detectDateFormat</a></li><li data-type='method'><a href="DateUtils.html#.intAddDays">intAddDays</a></li><li data-type='method'><a href="DateUtils.html#.intToDate">intToDate</a></li><li data-type='method'><a href="DateUtils.html#.intToSQL">intToSQL</a></li><li data-type='method'><a href="DateUtils.html#.intToStr2">intToStr2</a></li><li data-type='method'><a href="DateUtils.html#.intToStr4">intToStr4</a></li><li data-type='method'><a href="DateUtils.html#.isSQLDate">isSQLDate</a></li><li data-type='method'><a href="DateUtils.html#.isValid">isValid</a></li><li data-type='method'><a href="DateUtils.html#.julian">julian</a></li><li data-type='method'><a href="DateUtils.html#.longFormat">longFormat</a></li><li data-type='method'><a href="DateUtils.html#.millsToInt">millsToInt</a></li><li data-type='method'><a href="DateUtils.html#.month">month</a></li><li data-type='method'><a href="DateUtils.html#.monthName">monthName</a></li><li data-type='method'><a href="DateUtils.html#.monthsDifference">monthsDifference</a></li><li data-type='method'><a href="DateUtils.html#.strToInt">strToInt</a></li><li data-type='method'><a href="DateUtils.html#.toInt">toInt</a></li><li data-type='method'><a href="DateUtils.html#.today">today</a></li><li data-type='method'><a href="DateUtils.html#.year">year</a></li></ul></li><li><a href="Editor.html">Editor</a><ul class='methods'><li data-type='method'><a href="Editor.html#clear">clear</a></li><li data-type='method'><a href="Editor.html#dispose">dispose</a></li><li data-type='method'><a href="Editor.html#getHtml">getHtml</a></li><li data-type='method'><a href="Editor.html#getText">getText</a></li><li data-type='method'><a href="Editor.html#printEditorContent">printEditorContent</a></li><li data-type='method'><a href="Editor.html#readOnly">readOnly</a></li><li data-type='method'><a href="Editor.html#readWrite">readWrite</a></li><li data-type='method'><a href="Editor.html#setHtml">setHtml</a></li><li data-type='method'><a href="Editor.html#.addEditor">addEditor</a></li><li data-type='method'><a href="Editor.html#.create">create</a></li><li data-type='method'><a href="Editor.html#.newEditorContext">newEditorContext</a></li><li data-type='method'><a href="Editor.html#.popAllEditorContexts">popAllEditorContexts</a></li><li data-type='method'><a href="Editor.html#.popEditorContext">popEditorContext</a></li></ul></li><li><a href="MutableString.html">MutableString</a><ul class='methods'><li data-type='method'><a href="MutableString.html#append">append</a></li><li data-type='method'><a href="MutableString.html#charAt">charAt</a></li><li data-type='method'><a href="MutableString.html#clear">clear</a></li><li data-type='method'><a href="MutableString.html#delete">delete</a></li><li data-type='method'><a href="MutableString.html#insert">insert</a></li><li data-type='method'><a href="MutableString.html#length">length</a></li><li data-type='method'><a href="MutableString.html#prepend">prepend</a></li><li data-type='method'><a href="MutableString.html#removeFromEnd">removeFromEnd</a></li><li data-type='method'><a href="MutableString.html#removeFromStart">removeFromStart</a></li><li data-type='method'><a href="MutableString.html#replace">replace</a></li><li data-type='method'><a href="MutableString.html#setCharAt">setCharAt</a></li><li data-type='method'><a href="MutableString.html#toString">toString</a></li></ul></li><li><a href="NumberUtils.html">NumberUtils</a><ul class='methods'><li data-type='method'><a href="NumberUtils.html#.floatEqual">floatEqual</a></li><li data-type='method'><a href="NumberUtils.html#.round">round</a></li><li data-type='method'><a href="NumberUtils.html#.roundDown">roundDown</a></li><li data-type='method'><a href="NumberUtils.html#.roundUp">roundUp</a></li></ul></li><li><a href="Server.html">Server</a><ul class='methods'><li data-type='method'><a href="Server.html#.binaryCall">binaryCall</a></li><li data-type='method'><a href="Server.html#.call">call</a></li><li data-type='method'><a href="Server.html#.callAll">callAll</a></li><li data-type='method'><a href="Server.html#.fileUploadSend">fileUploadSend</a></li><li data-type='method'><a href="Server.html#.logout">logout</a></li><li data-type='method'><a href="Server.html#.setMaxInactivityHours">setMaxInactivityHours</a></li><li data-type='method'><a href="Server.html#.setMaxInactivityMinutes">setMaxInactivityMinutes</a></li><li data-type='method'><a href="Server.html#.setMaxInactivitySeconds">setMaxInactivitySeconds</a></li><li data-type='method'><a href="Server.html#.setURL">setURL</a></li></ul></li><li><a href="TimeUtils.html">TimeUtils</a><ul class='methods'><li data-type='method'><a href="TimeUtils.html#.addHours">addHours</a></li><li data-type='method'><a href="TimeUtils.html#.addMinutes">addMinutes</a></li><li data-type='method'><a href="TimeUtils.html#.current">current</a></li><li data-type='method'><a href="TimeUtils.html#.dateToTime">dateToTime</a></li><li data-type='method'><a href="TimeUtils.html#.diff">diff</a></li><li data-type='method'><a href="TimeUtils.html#.format">format</a></li><li data-type='method'><a href="TimeUtils.html#.formatLong">formatLong</a></li><li data-type='method'><a href="TimeUtils.html#.hours">hours</a></li><li data-type='method'><a href="TimeUtils.html#.isValid">isValid</a></li><li data-type='method'><a href="TimeUtils.html#.millsToInt">millsToInt</a></li><li data-type='method'><a href="TimeUtils.html#.minutes">minutes</a></li><li data-type='method'><a href="TimeUtils.html#.minutesToTime">minutesToTime</a></li><li data-type='method'><a href="TimeUtils.html#.strToInt">strToInt</a></li><li data-type='method'><a href="TimeUtils.html#.toInt">toInt</a></li><li data-type='method'><a href="TimeUtils.html#.totalMinutes">totalMinutes</a></li></ul></li><li><a href="Utils.html">Utils</a><ul class='methods'><li data-type='method'><a href="Utils.html#.appendChild">appendChild</a></li><li data-type='method'><a href="Utils.html#.assureArray">assureArray</a></li><li data-type='method'><a href="Utils.html#.beep">beep</a></li><li data-type='method'><a href="Utils.html#.cleanup">cleanup</a></li><li data-type='method'><a href="Utils.html#.clearAllEnterContexts">clearAllEnterContexts</a></li><li data-type='method'><a href="Utils.html#.clearSomeControlValueChanged">clearSomeControlValueChanged</a></li><li data-type='method'><a href="Utils.html#.cloneArrayShallow">cloneArrayShallow</a></li><li data-type='method'><a href="Utils.html#.convertToArray">convertToArray</a></li><li data-type='method'><a href="Utils.html#.countProperties">countProperties</a></li><li data-type='method'><a href="Utils.html#.didSomeControlValueChange">didSomeControlValueChange</a></li><li data-type='method'><a href="Utils.html#.drop">drop</a></li><li data-type='method'><a href="Utils.html#.eraseChildren">eraseChildren</a></li><li data-type='method'><a href="Utils.html#.fileNameExtension">fileNameExtension</a></li><li data-type='method'><a href="Utils.html#.fixCapitalization">fixCapitalization</a></li><li data-type='method'><a href="Utils.html#.format">format</a></li><li data-type='method'><a href="Utils.html#.formatSsn">formatSsn</a></li><li data-type='method'><a href="Utils.html#.formatb">formatb</a></li><li data-type='method'><a href="Utils.html#.getAndEraseData">getAndEraseData</a></li><li data-type='method'><a href="Utils.html#.getAppUrl">getAppUrl</a></li><li data-type='method'><a href="Utils.html#.getData">getData</a></li><li data-type='method'><a href="Utils.html#.getEmailFromAddressWithName">getEmailFromAddressWithName</a></li><li data-type='method'><a href="Utils.html#.getFileUploadCount">getFileUploadCount</a></li><li data-type='method'><a href="Utils.html#.getFileUploadFormData">getFileUploadFormData</a></li><li data-type='method'><a href="Utils.html#.getLastError">getLastError</a></li><li data-type='method'><a href="Utils.html#.getLastErrorDate">getLastErrorDate</a></li><li data-type='method'><a href="Utils.html#.getLocation">getLocation</a></li><li data-type='method'><a href="Utils.html#.getMilliseconds">getMilliseconds</a></li><li data-type='method'><a href="Utils.html#.getNameFromAddressWithName">getNameFromAddressWithName</a></li><li data-type='method'><a href="Utils.html#.getPageArgv">getPageArgv</a></li><li data-type='method'><a href="Utils.html#.getPageRetv">getPageRetv</a></li><li data-type='method'><a href="Utils.html#.getURLParam">getURLParam</a></li><li data-type='method'><a href="Utils.html#.globalEnterHandler">globalEnterHandler</a></li><li data-type='method'><a href="Utils.html#.htmlToText">htmlToText</a></li><li data-type='method'><a href="Utils.html#.isChangeChar">isChangeChar</a></li><li data-type='method'><a href="Utils.html#.isOnline">isOnline</a></li><li data-type='method'><a href="Utils.html#.isValidDomain">isValidDomain</a></li><li data-type='method'><a href="Utils.html#.isValidEmailAddress">isValidEmailAddress</a></li><li data-type='method'><a href="Utils.html#.isValidEmailAddressWithName">isValidEmailAddressWithName</a></li><li data-type='method'><a href="Utils.html#.isValidSsn">isValidSsn</a></li><li data-type='method'><a href="Utils.html#.keep">keep</a></li><li data-type='method'><a href="Utils.html#.loadPage">loadPage</a></li><li data-type='method'><a href="Utils.html#.makeDraggable">makeDraggable</a></li><li data-type='method'><a href="Utils.html#.newEnterContext">newEnterContext</a></li><li data-type='method'><a href="Utils.html#.openUrl">openUrl</a></li><li data-type='method'><a href="Utils.html#.popEnterContext">popEnterContext</a></li><li data-type='method'><a href="Utils.html#.popPage">popPage</a></li><li data-type='method'><a href="Utils.html#.popup_close">popup_close</a></li><li data-type='method'><a href="Utils.html#.popup_open">popup_open</a></li><li data-type='method'><a href="Utils.html#.popup_set_height">popup_set_height</a></li><li data-type='method'><a href="Utils.html#.popup_set_width">popup_set_width</a></li><li data-type='method'><a href="Utils.html#.pushPage">pushPage</a></li><li data-type='method'><a href="Utils.html#.rescan">rescan</a></li><li data-type='method'><a href="Utils.html#.saveData">saveData</a></li><li data-type='method'><a href="Utils.html#.setEnterFunction">setEnterFunction</a></li><li data-type='method'><a href="Utils.html#.setSomeControlValueChangeFunction">setSomeControlValueChangeFunction</a></li><li data-type='method'><a href="Utils.html#.showMessage">showMessage</a></li><li data-type='method'><a href="Utils.html#.showReport">showReport</a></li><li data-type='method'><a href="Utils.html#.someControlValueChanged">someControlValueChanged</a></li><li data-type='method'><a href="Utils.html#.splitEmailAddresses">splitEmailAddresses</a></li><li data-type='method'><a href="Utils.html#.take">take</a></li><li data-type='method'><a href="Utils.html#.textToHtml">textToHtml</a></li><li data-type='method'><a href="Utils.html#.toASCII">toASCII</a></li><li data-type='method'><a href="Utils.html#.toBase64">toBase64</a></li><li data-type='method'><a href="Utils.html#.toNumber">toNumber</a></li><li data-type='method'><a href="Utils.html#.toggleFullscreen">toggleFullscreen</a></li><li data-type='method'><a href="Utils.html#.useComponent">useComponent</a></li><li data-type='method'><a href="Utils.html#.useTaglessComponent">useTaglessComponent</a></li><li data-type='method'><a href="Utils.html#.uuid">uuid</a></li><li data-type='method'><a href="Utils.html#.waitMessage">waitMessage</a></li><li data-type='method'><a href="Utils.html#.waitMessageEnd">waitMessageEnd</a></li><li data-type='method'><a href="Utils.html#.yesNo">yesNo</a></li></ul></li><li><a href="components.html">components</a><ul class='methods'><li data-type='method'><a href="components.html#.check_box">check_box</a></li><li data-type='method'><a href="components.html#.date_input">date_input</a></li><li data-type='method'><a href="components.html#.drop_down">drop_down</a></li><li data-type='method'><a href="components.html#.duration_input">duration_input</a></li><li data-type='method'><a href="components.html#.file_upload">file_upload</a></li><li data-type='method'><a href="components.html#.list_box">list_box</a></li><li data-type='method'><a href="components.html#.native_date_input">native_date_input</a></li><li data-type='method'><a href="components.html#.numeric_input">numeric_input</a></li><li data-type='method'><a href="components.html#.picture">picture</a></li><li data-type='method'><a href="components.html#.popup">popup</a></li><li data-type='method'><a href="components.html#.push_button">push_button</a></li><li data-type='method'><a href="components.html#.radio_button">radio_button</a></li><li data-type='method'><a href="components.html#.text_input">text_input</a></li><li data-type='method'><a href="components.html#.text_label">text_label</a></li><li data-type='method'><a href="components.html#.textbox_input">textbox_input</a></li><li data-type='method'><a href="components.html#.time_input">time_input</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#$$">$$</a></li><li><a href="global.html#DOMUtils">DOMUtils</a></li><li><a href="global.html#DateTimeUtils.">DateTimeUtils.</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">AGGrid.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global DateUtils, Utils, DateTimeUtils */
+
+'use strict';
+
+
+/**
+ * Provide a grid control.
+ * &lt;br>&lt;br>
+ * This class is a wrapper around the public ag-grid utility.  It is intended that this class be used exclusively
+ * rather than any of the raw ag-grid API.  It provides a higher-level and more convenient API.
+ * &lt;br>&lt;br>
+ * Please refer to ag-grid documentation on &lt;a href="https://www.ag-grid.com/documentation-main/documentation.php">https://www.ag-grid.com/documentation-main/documentation.php&lt;/a> for more information.
+ *
+ */
+class AGGrid {
+    /**
+     * Create a new AGGrid instance.
+     * &lt;br>&lt;br>
+     * The HTML portion of this should look like:
+     * &lt;br>&lt;br>
+     * &lt;code>&amp;lt;div id="grid" style="margin-top: 10px; width: 100%; height: calc(100% - 90px);"&amp;gt;&amp;lt;/div&amp;gt;&lt;/code>
+     * &lt;br>&lt;br>
+     * CSS &lt;code>calc&lt;/code> can be used to set the width or height so that the grid dynamically resizes when the browser window
+     * gets resized.
+     *
+     * @param id {string} the ID of the div that represents the grid
+     * @param columns an ag-grid columnDefs data structure
+     * @param keyColumn {string} the ID of the key column (optional)
+     */
+    constructor(id, columns, keyColumn=undefined) {
+        this.id = id;
+        this.gridElement = document.querySelector('#' + id);
+        this.columns = columns;
+        this.rowSelection = AGGrid.SINGLE_SELECTION;
+        this.data = [];
+        this.keyColumn = keyColumn;
+        this.components = {};
+        this.gridInstantiated = false;
+        this.highlightedRows = [];
+        this.dragFunction = null;
+        this.suppressRowClickSelection = false;
+        this.suppressHorizontalScroll = true;
+        this.rowStyleFun = null;
+        this.disableCtl = false;
+        this.rowDoubleClickHandler = null;
+        this.selectionChangedHandler = null;
+    }
+
+    /**
+     * Initialize and show the grid.
+     * &lt;br>&lt;br>
+     * Important!  Once this is called, you must call the &lt;code>destroy()&lt;/code> method when the grid is no longer needed.
+     *
+     * @returns {AGGrid}
+     */
+    show() {
+        const self = this;
+        this.gridOptions = {
+            columnDefs: this.columns,
+            rowData: this.data || [],
+            rowSelection: {
+                mode: this.rowSelection,
+                enableDeselection: this.rowSelection !== AGGrid.MULTI_SELECTION,
+                enableClickSelection: !this.suppressRowClickSelection,
+                checkboxes: false,
+                headerCheckbox: false
+            },
+            suppressHorizontalScroll: this.suppressHorizontalScroll,
+            components: this.components,
+            suppressRowHoverHighlight: this.suppressRowClickSelection,
+            suppressCellFocus: true,
+            onRowDragEnd: function (e) {
+                if (self.dragFunction)
+                    self.dragFunction(e.node.data, e.overNode.data);
+            },
+            defaultColDef: {
+                resizable: true
+            },
+            getRowStyle: this.rowStyleFun,
+            onGridReady: function (params) {
+                // Store the api reference
+                self.gridOptions.api = params.api;
+                
+                // Set any data that was added before the grid was ready
+                if (self.data &amp;&amp; self.data.length > 0) {
+                    params.api.setGridOption('rowData', self.data);
+                    self.data = [];  // Clear internal data after setting to grid
+                }
+                
+                if (self.suppressHorizontalScroll) {
+                    if (self.gridElement.offsetParent != null)
+                        params.api.sizeColumnsToFit();
+
+                    window.addEventListener('resize', function() {
+                        setTimeout(function() {
+                            if (self.gridElement.offsetParent!= null &amp;&amp; self.gridInstantiated)
+                                params.api.sizeColumnsToFit();
+                        }, 100);
+                    });
+                }
+                
+                // Re-apply event handlers if they were set after show() was called
+                if (self.rowDoubleClickHandler &amp;&amp; !self.gridOptions.onRowDoubleClicked) {
+                    self.setOnRowDoubleClicked(self.rowDoubleClickHandler);
+                }
+                if (self.selectionChangedHandler &amp;&amp; !self.gridOptions.onSelectionChanged) {
+                    self.setOnSelectionChanged(self.selectionChangedHandler);
+                }
+            }/* ,
+            getRowNodeId: function (data) {
+                return data[self.keyColumn];
+            }
+            */
+            // Disable all warnings
+            // suppressPropertyNamesCheck: true
+        };
+        
+        // Add stored event handlers
+        if (this.rowDoubleClickHandler) {
+            this.gridOptions.onRowDoubleClicked = () => {
+                if (!Utils.suspendDepth &amp;&amp; !self.disableCtl)
+                    self.rowDoubleClickHandler();
+            };
+        }
+        
+        if (this.selectionChangedHandler) {
+            this.gridOptions.onSelectionChanged = () => {
+                if (!self.disableCtl &amp;&amp; self.gridOptions.api)
+                    self.selectionChangedHandler(self.gridOptions.api.getSelectedRows());
+            };
+        }
+
+        if (self.keyColumn)
+            this.gridOptions.getRowId = data => String(data.data[self.keyColumn]);
+
+        let eGridDiv = document.querySelector('#' + this.id);
+        if (!eGridDiv)
+            console.log("grid id " + this.id + " does not exist");
+        else {
+            // Check if container has height set via CSS or inline styles
+            const computedStyle = window.getComputedStyle(eGridDiv);
+            if (computedStyle.height === '0px' || computedStyle.height === 'auto') {
+                eGridDiv.style.minHeight = '400px';
+            }
+            // Add theme class for styling
+            eGridDiv.classList.add('ag-theme-quartz');
+            agGrid.createGrid(eGridDiv, this.gridOptions);
+            this.gridInstantiated = true;
+        }
+        if (!AGGrid.gridContext.length)
+            AGGrid.newGridContext();
+        AGGrid.addGrid(this);
+        return this;
+    }
+
+    resizeColumns() {
+        if (this.gridElement.offsetParent != null &amp;&amp; this.gridInstantiated)
+            this.gridOptions.api.sizeColumnsToFit();
+        return this;
+    }
+
+    /**
+     * Free all of the internal data structures associated with the grid.
+     * &lt;br>&lt;br>
+     * This method must be called once a grid is no longer needed.
+     * &lt;br>&lt;br>
+     * Please note that this function is normally handled by the framework.
+     * If your application code is calling it, you are most likely doing something wrong.
+     */
+    destroy() {
+        if (this.gridInstantiated) {
+            this.gridOptions.api.destroy();
+            this.gridOptions = null;
+            this.id = null;
+            this.columns = null;
+            this.rowSelection = null;
+            this.data = null;
+            this.keyColumn = null;
+            this.components = null;
+            this.gridInstantiated = false;
+        }
+    }
+
+    /**
+     * If a row is dragged, this function will be called when the drag operation is complete.  &lt;code>fun&lt;/code> is
+     * passed two arguments.  The first is the row being dragged.  The second is the row over which it was released.
+     *
+     * @param fun {function}
+     * @returns {AGGrid}
+     */
+    setDragFunction(fun) {
+        this.dragFunction = fun;
+        return this;
+    }
+
+    /**
+     * This method allows you to set a function that determines
+     * the style of each individual row.
+     *
+     * @param fun {function}
+     * @returns {AGGrid}
+     */
+    rowStyleFunction(fun) {
+        this.rowStyleFun = fun;
+        return this;
+    }
+
+    /**
+     * Erase all the rows in the grid.
+     *
+     * @returns {AGGrid}
+     */
+    clear() {
+        if (this.gridOptions &amp;&amp; this.gridOptions.api)
+            this.gridOptions.api.setGridOption('rowData', []);
+        else
+            this.data = [];
+        return this;
+    }
+
+    /**
+     * Erase all existing rows and set the new rows.
+     *
+     * @param data {array} the data to display in the grid
+     * @returns {AGGrid}
+     */
+    setRowData(data) {
+        if (!this.gridOptions || !this.gridOptions.api)
+            this.data = data;
+        else {
+            this.gridOptions.api.setGridOption('rowData', data);
+            this.data = [];  // Clear internal data after setting to grid
+        }
+        return this;
+    }
+
+    /**
+     * Delete the row who's key column is equal to &lt;code>id&lt;/code>.
+     *
+     * @param id
+     * @returns {AGGrid}
+     */
+    deleteRow(id) {
+        const node = this.gridOptions.api.getRowNode(String(id));
+        if (node  &amp;&amp;  node.data)
+            this.gridOptions.api.applyTransaction({remove: [node.data]});
+        return this;
+    }
+
+    /**
+     * Disallow any row selection.  This must be called before &lt;code>show()&lt;/code>
+     *
+     * @returns {AGGrid}
+     */
+    noRowSelection() {
+        this.suppressRowClickSelection = true;
+        return this;
+    }
+
+    /**
+     * Highlight a row or an array of particular rows.
+     * &lt;br>&lt;br>
+     * Note that highlighting a row and selecting a row are two different things.
+     * &lt;br>&lt;br>
+     * Pass row index or an array or row indexes to highlight.
+     * Pass null to un-highlight all rows.
+     *
+     * @param idx  null, number, or array of numbers
+     */
+    highlightRows(idx) {
+        this.highlightedRows = idx = Utils.assureArray(idx);
+        this.gridOptions.getRowStyle = (params) => {
+            for (let i=0 ; i &lt; idx.length ; i++)
+                if (params.node.rowIndex === idx[i])
+                    return { background: 'lightPink' };
+            return null;
+        };
+        this.gridOptions.api.deselectAll();
+        this.gridOptions.api.redrawRows();
+        return this;
+    }
+
+    /**
+     * Select the row specified in which the key column of that row is equal to &lt;code>id&lt;/code>.
+     *
+     * @param id
+     * @returns {AGGrid}
+     */
+    selectId(id) {
+        const node = this.gridOptions.api.getRowNode(String(id));
+        if (node  &amp;&amp;  node.data)
+            node.setSelected(true, true);
+        return this;
+    }
+
+    /**
+     * De-select all rows.
+     *
+     * @returns {AGGrid}
+     */
+    deselectAll() {
+        this.gridOptions.api.deselectAll();
+        return this;
+    }
+
+    /**
+     * Add an array of records to the grid.
+     * &lt;br>&lt;br>
+     * Note that this method is far faster than a series of &lt;code>addRecord()&lt;/code> calls.
+     *
+     * @param data {array} each element of the array is an object representing a row
+     * @returns {AGGrid}
+     */
+    addRecords(data) {
+        data = Utils.assureArray(data);
+        if (!this.gridOptions || !this.gridOptions.api)
+            this.data = this.data.concat(data);
+        else {
+            this.gridOptions.api.applyTransaction({add: data});
+            this.data = [];  // Clear internal data after adding to grid
+            if (this.suppressHorizontalScroll)
+                this.resizeColumns();  // when vert scrollbar gets auto-added must resize columns
+        }
+        return this;
+    }
+
+    /**
+     * Add a single record to the grid.
+     * &lt;br>&lt;br>
+     * Note that if several records are going to be added at a time, it is far faster to use &lt;code>addRecords()&lt;/code>.
+     *
+     * @param data {object} each element represents a column on the grid
+     * @returns {AGGrid}
+     */
+    addRecord(data) {
+        if (!this.gridOptions || !this.gridOptions.api)
+            this.data.push(data);
+        else {
+            this.gridOptions.api.applyTransaction({add: [data]});
+            this.data = [];  // Clear internal data after adding to grid
+        }
+        return this;
+    }
+
+    /**
+     * Clear the selection from the currently selected rows.
+     *
+     * @returns {AGGrid}
+     */
+    clearSelection() {
+        if (this.gridOptions &amp;&amp; this.gridOptions.api)
+            this.gridOptions.api.deselectAll();
+        return this;
+    }
+
+    /**
+     * Update the selected row with the new data provided in &lt;code>row&lt;/code>.
+     *
+     * @param row
+     * @returns {AGGrid}
+     */
+    updateSelectedRecord(row) {
+        this.gridOptions.api.applyTransaction({update: [row]});
+        return this;
+    }
+
+    /**
+     * Delete the selected rows.
+     *
+     * @returns {AGGrid}
+     */
+    deleteSelectedRows() {
+        const selectedData = this.gridOptions.api.getSelectedRows();
+        this.gridOptions.api.applyTransaction({remove: selectedData});
+        return this;
+    }
+
+    /**
+     * Return an array containing all of the selected rows.
+     *
+     * @returns {*}
+     */
+    getSelectedRows() {
+        return this.gridOptions.api.getSelectedRows();
+    }
+
+    /**
+     * Returns all the rows.
+     *
+     * @returns {array}
+     */
+    getAllRows() {
+        const rows = [];
+        this.gridOptions.api.forEachNode(node => rows.push(node.data));
+        return rows;
+    }
+
+    /**
+     * Returns the number of rows in the grid.
+     *
+     * @returns {number}
+     */
+    getNumberOfRows() {
+        return this.gridOptions.api.getModel().getRowCount();
+    }
+
+    /**
+     * Get row at index &lt;code>n&lt;/code> (indexes are zero origin)
+     *
+     * @param n
+     * @returns {*}
+     */
+    getRowAtIndex(n) {
+        const rows = this.getAllRows();
+        return rows[n];
+    }
+
+    /**
+     * Returns the first row in the grid.  If there are no rows, a &lt;code>null&lt;/code> is returned.
+     * Row selection is ignored.
+     *
+     * @returns {*|null}
+     */
+    getFirstRow() {
+        const rows = this.getAllRows();
+        if (!rows.length)
+            return null;
+        return rows[0];
+    }
+
+    /**
+     * Returns the last row in the grid.  If there are no rows, a &lt;code>null&lt;/code> is returned.
+     * Row selection is ignored.
+     *
+     * @returns {*|null}
+     */
+    getLastRow() {
+        const rows = this.getAllRows();
+        if (!rows.length)
+            return null;
+        return rows[rows.length-1];
+    }
+
+    /**
+     * Return the index of the selected row.  &lt;code>null&lt;/code> is returned if no row is selected.
+     * If multiple rows are selected, the index of the first selected row is returned.
+     *
+     * @returns {null|number}
+     */
+    getSelectedRowIndex() {
+        const rows = this.getAllRows();
+        const selectedRow = this.getSelectedRow();
+        const key = selectedRow[this.keyColumn];
+        for (let i=0 ; i &lt; rows.length ; i++)
+            if (key === rows[i][this.keyColumn])
+                return i;
+        return null;
+    }
+
+    /**
+     * Return an array of the indexes of all of the selected rows.
+     *
+     * @returns {array}
+     */
+    getSelectedRowIndexes() {
+        const rows = this.getAllRows();
+        const selectedRows = this.getSelectedRows();
+        const lst = [];
+        for (let i=0 ; i &lt; rows.length ; i++)
+            for (let j=0 ; j &lt; selectedRows.length ; j++)
+                if (selectedRows[j][this.keyColumn] === rows[i][this.keyColumn]) {
+                    lst.push(i);
+                    break;
+                }
+        return lst;
+    }
+
+    /**
+     * Delete row at index &lt;code>n&lt;/code>.
+     *
+     * @param n
+     * @returns {AGGrid}
+     */
+    deleteRowIndex(n) {
+        const row = this.getRowAtIndex(n);
+        this.gridOptions.api.applyTransaction({remove: [row]});
+        return this;
+    }
+
+    /**
+     * Return the selected row or &lt;code>null&lt;/code> if none is selected.
+     *
+     * @returns {*}
+     */
+    getSelectedRow() {
+        const sel = this.gridOptions.api.getSelectedRows();
+        return sel.length === 1 ? sel[0] : null;
+    }
+
+    /**
+     * Returns the number of selected rows
+     *
+     * @returns {*}
+     */
+    numberOfSelectedRows() {
+        return this.gridOptions.api.getSelectedRows().length;
+    }
+
+    getDataItems() {
+        const dataItems = [];
+        this.gridOptions.api.forEachNode(node => {
+            dataItems.push(node.data);
+        });
+        return dataItems;
+    }
+
+    /**
+     * Execute &lt;code>fn&lt;/code> anytime a row selection is changed.
+     * &lt;br>&lt;br>
+     * &lt;code>fn&lt;/code> is passwd an array of the selected rows.
+     *
+     * @param fn {function}
+     */
+    setOnSelectionChanged(fn) {
+        const self = this;
+        this.selectionChangedHandler = fn;
+        
+        if (this.gridOptions &amp;&amp; this.gridOptions.api) {
+            // Grid already created, use setGridOption to update the event handler
+            this.gridOptions.api.setGridOption('onSelectionChanged', fn ? (() => {
+                if (!self.disableCtl)
+                    fn(self.gridOptions.api.getSelectedRows());
+            }) : null);
+        }
+        return this;
+    }
+
+    /**
+     * Execute function &lt;code>fn&lt;/code> whenever the user double-clicks on a row.
+     *
+     * @param fn {function}
+     * @returns {AGGrid}
+     */
+    setOnRowDoubleClicked(fn) {
+        const self = this;
+        this.rowDoubleClickHandler = fn;
+        
+        if (this.gridOptions &amp;&amp; this.gridOptions.api) {
+            // Grid already created, use setGridOption to update the event handler
+            this.gridOptions.api.setGridOption('onRowDoubleClicked', fn ? (() => {
+                if (!Utils.suspendDepth &amp;&amp; !self.disableCtl)
+                    fn();
+            }) : null);
+        }
+        return this;
+    }
+
+    /**
+     * Return &lt;code>true&lt;/code> if the grid is empty.
+     *
+     * @returns {boolean}
+     */
+    isEmpty() {
+        return this.gridOptions.api.getModel().getRowCount() === 0;
+    }
+
+    sizeColumnsToFit() {
+        if (this.gridOptions === undefined)
+            console.error("Grid options not found. Make sure the grid is built using the 'build' method.");
+        else
+            this.gridOptions.api.sizeColumnsToFit();
+        return this;
+    }
+
+    /**
+     * Add a class that defines special cell formatting.
+     *
+     * @param tag
+     * @param cls
+     * @returns {AGGrid}
+     */
+    addComponent(tag, cls) {
+        this.components[tag] = cls;
+        return this;
+    }
+
+    /**
+     * By default, grids are single-row-select enabled.  This method enables multi-row-select.
+     * It must be called prior to &lt;code>show()&lt;/code>.
+     *
+     * @returns {AGGrid}
+     */
+    multiSelect() {
+        this.rowSelection = AGGrid.MULTI_SELECTION;
+        return this;
+    }
+
+    /**
+     * Hide or show column colId.
+     *
+     * @param colId
+     * @param {boolean} val true=show, false=hide
+     * @returns {boolean} previous value
+     */
+    columnShow(colId, val) {
+        let hide;
+        const state = {
+            state: [
+                {
+                    colId: colId,
+                    hide: !val
+                }
+            ]
+        };
+        const priorState = this.gridOptions.api.getColumnState();
+        for (let prop in priorState) {
+            let val = priorState[prop];
+            if (val.colId === colId) {
+                hide = val.hide;
+                break;
+            }
+        }
+        this.gridOptions.api.applyColumnState(state);
+        return !hide;
+    }
+
+    /**
+     * Create a new grid context.
+     */
+    static newGridContext() {
+        AGGrid.gridContext.push([]);
+    }
+
+    /**
+     * Add a grid to the current context.
+     *
+     * @param grid
+     */
+    static addGrid(grid) {
+        const cc = AGGrid.gridContext[AGGrid.gridContext.length - 1];
+        cc.push(grid);
+    }
+
+    /**
+     * Destroy all grids in last context and remove the context
+     */
+    static popGridContext() {
+        const c = AGGrid.gridContext.pop();
+        if (c)
+            for (let i = 0; i &lt; c.length; i++)
+                c[i].destroy();
+    }
+
+    /**
+     * Destroys all popup and screen grids that have been created
+     */
+    static popAllGridContexts() {
+        while (AGGrid.gridContext.length)
+            AGGrid.popGridContext();
+    }
+
+    /**
+     * Format for date times formatted as mm/dd/yyyy hh:mm AM/PM
+     * &lt;br>&lt;br>
+     * Usage:  in columnDefs:  valueFormatter:  AGGrid.dateTime
+     *
+     * @param params
+     * @returns {string}
+     */
+    static dateTime(params) {
+        return DateTimeUtils.formatDate(params.value);
+    }
+
+    /**
+     * Format for date times formatted as mm/dd/yyyy
+     * &lt;br>&lt;br>
+     * Usage:  in columnDefs:  valueFormatter:  AGGrid.date
+     *
+     * @param params
+     * @returns {string}
+     */
+    static date(params) {
+        return DateUtils.intToStr4(params.value);
+    }
+
+    /**
+     * Format times as HH:MM AM/PM
+     * &lt;br>&lt;br>
+     * Usage:  in columnDefs:  valueFormatter:  AGGrid.time
+     *
+     * @param params
+     * @returns {string}
+     */
+    static time(params) {
+        return TimeUtils.format(params.value);
+    }
+
+    /**
+     * Format a numeric field
+     * &lt;br>&lt;br>
+     * Usage:  in columnDefs:  valueFormatter:  AGGrid.numericFormat, mask:  'xxx', decimalPlaces: N
+     *
+     * @param params
+     * @returns {string}
+     *
+     * @see Utils.format()
+     */
+    static  numericFormat(params) {
+        let val = params.value;
+        if (!val)
+            val = 0;
+        val = typeof val !== 'string' ? val : Number(val.replaceAll('$', '').replaceAll(',', ''));
+        const msk = params.colDef.mask ? params.colDef.mask : '';
+        const dp  = params.colDef.decimalPlaces ? params.colDef.decimalPlaces : 0;
+        return Utils.format(val, msk, 0, dp);
+    }
+
+    /**
+     * Disables the clicks on the AGGrid control.
+     *
+     * @param {boolean} flg - true=disable, false=enable
+     */
+    disable(flg = true) {
+        this.disableCtl = flg;
+    }
+
+    /**
+     * Enables the clicks on the AGGrid control.
+     *
+     * @param {boolean} flg - true=enable, false=disable
+     */
+    enable(flg = true) {
+        this.disableCtl = !flg;
+    }
+
+}
+
+// class variables
+AGGrid.SINGLE_SELECTION = 'singleRow';
+AGGrid.MULTI_SELECTION = 'multiRow';
+
+AGGrid.gridContext = [];        //  An array of arrays.  The outer array represents a stack of contexts.
+                                //  The inner array is an array of grids that'll need to be disposed.
+                                //  Basically, each context (except the first) represents a popup.
+                                //  The first represents the current screen.
+                                //  Each inner array contains an array of grids in that context.
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

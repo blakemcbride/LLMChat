@@ -1,0 +1,437 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 2018 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+@node Back-end API
+
+@html
+@include style.css
+@end html
+
+@chapter Back-end API
+
+In addition to the full API provided by the Java system and any additional
+JAR files you add, @emph{Kiss} comes with an API that assists with the
+development of business application with @emph{Kiss}.  These 
+API's may be broadly grouped as follows:
+
+@enumerate
+@item
+Database API
+@item
+JSON API
+@item
+Utilities
+@end enumerate
+
+An overview of these APIs is contained in this chapter.  Detailed
+documentation is contained in the JavaDocs (@xref{javadoc,,Creating
+JavaDocs}) and in the @emph{Kiss} book, which provides comprehensive
+coverage with worked examples.
+
+@section Database API
+
+@emph{Kiss} comes with a powerful library for accessing SQL databases.
+Code for this is located under @code{org.kissweb.database} It is
+currently being used in production environments.  This API provides
+the following benefits:
+
+@itemize @bullet
+@item
+Automatic connection and statement pooling
+@item
+Vastly simpler API than bare JDBC
+@item
+Handling of parameterized arguments
+@item 
+Auto generation of SQL for single record adds, edits, and deletions
+@item
+Auto handling for cases of cursor interference on nested queries
+@item
+Supports transactions out-of-the-box
+@end itemize
+
+As shipped, this library supports PostgreSQL, Microsoft Server,
+Oracle, MySQL, and SQLite.
+
+The detailed documentation for the database utilities is in the
+JavaDocs which you must generate. (@xref{javadoc,,Creating JavaDocs}.)
+This section provides an overview.
+
+The @emph{Kiss} database routines revolve around four main classes as follows:
+
+@table @code
+@item Connection
+This represents a connection to an SQL database.
+@item Command
+This represents a single action or command against the database.
+@item Cursor
+If the action is a @code{select}, the @code{Cursor} represents a
+pointer into the result set.
+@item Record
+This class represents a single row within a table or result set.
+@end table
+
+The @code{Connection} class contains several convenience methods that
+are used in simple cases where only a single action is being
+performed.  These methods should not be used when multiple
+simultaneous actions are taking place at once (by that single thread).
+This issue is not a problem in multi-user or multi-threaded
+situations.  It is only a problem when a single thread is doing one
+action while another action is still open.
+
+You will notice that your REST services are passed a @emph{Connection}
+argument.  @emph{Kiss} automatically forms a unique connection for
+each REST service call and closes it when the call is done.
+Therefore, you will not normally need to create your own connection.
+Additionally, @emph{Kiss} automatically starts a new transaction with
+each REST service and commits it when the service is done.  However,
+if the service throws any exception, the transaction is rolled back
+instead.
+
+You would not normally write SQL for single record adds, updates, and
+deletes.  Using the @emph{Record} API, @code{Kiss} automatically
+generates these statements for you.
+
+In addition to the above, these utilities provide full support for transactions and parameters.
+
+@section Microservices
+
+Microservices are classes that may be added, changed, or deleted while
+the system is running.  In spite of this, however, all microservices
+are fully compiled and run at full speed.  This has two major advantages.
+
+First, in a development environment, all development may be done without 
+the need to bring the development server down, rebuild, re-deploy, and reboot
+the development server.  This means development time is significantly reduced.
+Additionally, IDE debuggers function in an environment such as this, so
+the debugging process may proceed normally.
+
+Second, in a production environment, the system may be upgraded
+without disrupting existing users on the system.  Of course, users
+actively using the exact features you have just changed could be
+affected (if their front-end and back-end do not agree).
+A simple re-try would put everything back in sync.
+
+Kiss microservices are on a class basis.  What that means is that a
+microservice is always a single and whole class.  You cannot have more
+than one class in a microservice.  Microservices can call
+core components of the system just as regular methods can.  However,
+if one wishes to have one microservice call another microservice,
+the calling mechanism is a little more clunky.  However, using this
+clunkier mechanism retains all of the dynamic features of the system.
+
+Defining microservices in Kiss involves defining a normal class just
+as you would write a class in any circumstance.  No special
+configuration, wiring, declarations, or additional steps are required.
+Microservice additions, changes, and deletions take effect as soon as
+you save the source file.  All microservices are compiled at runtime
+by the system automatically, so there is no compilation step that
+you need to perform.
+
+The only caveat to the above is that remote microservices (described
+below) expect a certain method signature (standard arguments).  This
+is only to assure that the front-end and back-end can communicate as
+expected.  Local microservices do not have this requirement.
+
+@subsection Microservice Language
+
+In Kiss, microservices can be written in Java, Groovy, or Common Lisp.
+However, Groovy microservices have been used exclusively in all
+current environments that we are aware of.  Therefore, Groovy
+microservices are best tested.
+
+The reasons Groovy was used are as follows:
+
+@enumerate
+@item
+Groovy was the easiest and most natural to implement.
+@item
+Groovy runs as fast as Java and has full and natural access to all 
+Java facilities.
+@item
+The actual loading of Groovy services is the fastest of the three languages.
+@item
+Groovy is largely a super-set of Java so if you know Java, you basically
+know Groovy.  Learning of additional Groovy facilities can occur over
+time.
+@item
+Groovy offers a small number of conveniences over Java.
+@end enumerate
+
+Having said all this, however, all three languages are fully supported
+and there are no known bugs in any of the supported languages.
+
+@subsection Types of Microservices
+
+There are two types of microservices as follows:
+
+@enumerate
+@item
+Remote (REST) Services
+@item
+Local Services
+@end enumerate
+
+Remote services are generally called by a (likely JavaScript)
+front-end or a remote client typically over @emph{HTTP} or
+@emph{HTTPS}.  Local services are services that are called locally,
+from within the system as, for example, one microservice calling a
+method in a different microservice.
+
+@subsection Remote Microservices
+
+In @emph{Kiss}, remote microservices appear to the outside world as
+typical @emph{REST} services.  They may be called by a
+@emph{JavaScript} front-end, web service client, or any other facility
+that can talk to @emph{REST} services.
+
+@emph{Kiss} @emph{REST} services are asynchronous @emph{HTTP} or
+@emph{HTTPS} services.  Internally they are processed utilizing a
+thread pool to assure optimal CPU utilization.  The number of threads
+in the thread pool is controlled by a configuration parameter given in
+the @code{application.ini} file.
+
+@emph{Kiss} comes with @emph{JavaScript} code so that @code{Kiss}
+@code{REST} services can be easily accessed from a typical front-end.
+This code resides in a single file and can and has been used by
+alternative front-ends such as @emph{Angular} and @code{React}.
+
+There is no need to handle authentication.  @emph{Kiss} handles that
+automatically.  So, when your web method is called, you know who
+they are and that they have been authenticated.
+
+@subsection Defining Remote Services
+
+Remote REST microservices typically reside under the
+@code{backend/services} directory.  You can organize them any way you
+like.  A microservice is equivalent to a class.  The class name is the
+microservice name.  The methods in that class that have a certain
+signature (a particular set of arguments) are the web methods.
+
+A REST web microservice has the following signature:
+
+@example
+void myMethod(JSONObject injson, 
+              JSONObject outjson, 
+              Connection db, 
+              ProcessServlet servlet) @{
+...
+@}
+@end example
+
+@table @samp
+@item injson
+This is a @code{JSON} object that contains all of the arguments passed
+in from the front-end.
+@item outjson
+This is a @code{JSON} object that will contain all of the results
+sent back to the front-end.  Whatever is put in this object gets sent back to the front-end.
+@item db
+This is a database connection that can be used to access the SQL database.  The
+connection is unique and independent of all other services.
+@item servlet
+This object provides access to various system facilities uniquely related
+to this call.
+@end table
+
+@xref{json,,JSON} and the @code{JavaDoc} for additional information.
+
+
+@subsection Local Microservices
+
+Local microservices are simply regular classes.  They typically reside
+in the @code{backend/services} directory organized any way you like.
+Although methods within a particular microservice/class can call each
+other in the normal way, there is an extra step required for one
+microservice to call a method in a different microservice.  One of the
+reasons for this is so the system can be certain the latest version of
+the service is loaded and that it is fully compiled before you attempt
+to use it.
+
+In Groovy, a method in one class/microservice can call a method
+in a different class/microservice via the following methods.
+
+@itemize @bullet
+@item
+GroovyService.run
+@item
+GroovyService.getMethod
+@end itemize
+
+See the @emph{Javadoc}.
+
+@subsection Exceptions
+
+@emph{Kiss} defines three exception classes named
+@code{UserException}, @code{LogException} and @code{ServerException}.
+These exceptions are designed to be thrown from within your web
+services.
+
+@code{UserException} is used to abort the web service due to some sort
+of user error.  An error message and possible error code are
+returned to the front-end.  The front-end displays the error message
+in a popup and tells the web front-end that the web service failed by
+returning @code{_Success = false}.  Nothing is logged on the back-end.
+This was not an error in the back-end.  It is good for notices to the user that
+something was wrong with their data.
+
+@code{LogException} is like @code{UserException} except that it additionally leaves the message on the back-end log.  This is useful
+for debugging purposes.
+
+@code{ServerException} is like @code{UserException} except that it additionally leaves a message and stack trace on the back-end log.  This is useful
+for debugging purposes.
+
+@anchor{json}
+@section JSON
+
+The first two arguments to all REST methods are @code{injson} and
+@code{outjson}.  @code{injson} is a @code{JSONObject} that contains
+the data passed in @emph{from} the front-end.  @code{outjson} is a
+pre-initialized, empty @code{JSONObject} that will be @emph{returned
+to} the front-end.  The REST service should read the data passed in
+from @code{injson}, perform any needed processes, and put the result
+into @code{outjson} to be returned to the front-end.
+
+The two main data types are @code{JSONObject} and @code{JSONArray}.
+Common methods include @code{getString()}, @code{getInt()},
+@code{getBoolean()}, @code{getDouble()}, @code{getJSONArray()},
+@code{has()}, and @code{put()}.  See the JavaDocs for the complete API.
+
+@section Large Language Models
+
+@emph{Kiss} provides a high-level interface to the @emph{Ollama} large language model (LLM), the @emph{OpenAI} (chatGPT) server, and the @emph{Anthropic} (Claude) server. This makes it easy for you to add LLM features to your application.
+
+@subsection Ollama
+
+Before this can function, however, you must have access to an @emph{Ollama} server, either running on your local machine or a remote machine.
+
+@itemize @bullet
+@item
+See @uref{https://ollama.com} for information about installing the @emph{Ollama} server.
+@item
+The @emph{Kiss} class @code{org.kissweb.llm.Ollama} implements the interface.
+@item
+It supports both single-prompt generation (@code{send}) and multi-turn,
+role-structured conversations via Ollama's @code{/api/chat} endpoint
+(@code{chat}); the latter applies each model's own chat template and exposes
+a @code{tools} parameter for function calling.
+@item
+@emph{Kiss} comes with a complete demo of this functionality.
+@end itemize
+
+@subsection OpenAI (chatGPT)
+
+Unlike the @emph{Ollama} server, which runs locally, the @emph{chatGPT}
+server runs on the cloud-based @emph{OpenAI} server.  In order to use
+this server, you must have an account with them.  Once you get an
+account, you will need an API Key to interface with their server.
+Once you have this API Key, you may query @emph{chatGPT}.
+
+The single @emph{KISS} class that interfaces with @emph{OpenAI} is
+named @emph{OpenAI}.  
+
+Typical usage would look as follows:
+
+@example
+    String apiKey = "xxxxxxxxxxxxxxx";
+    OpenAI chatGPT = new OpenAI(apiKey, "gpt-3.5-turbo")
+    String result = chatGPT.send("Who is president Bush?")
+@end example
+
+The static method @code{setUrl(String url)} can be used to override the
+default OpenAI endpoint URL.  This is useful for proxies, gateways, or
+OpenAI-compatible endpoints.  Since it is a global setting, changing the
+URL affects all instances.
+
+See that class for documentation.
+
+@subsection Anthropic (Claude)
+
+Like @emph{OpenAI}, the @emph{Anthropic} server runs in the cloud.
+In order to use it, you must have an account with Anthropic.
+Once you get an account, you will need an API Key to interface with their server.
+Once you have this API Key, you may query @emph{Claude}.
+
+The single @emph{KISS} class that interfaces with @emph{Anthropic} is
+named @emph{Anthropic}.
+
+Typical usage would look as follows:
+
+@example
+    String apiKey = "xxxxxxxxxxxxxxx";
+    Anthropic claude = new Anthropic(apiKey, "claude-sonnet-4-20250514");
+    String result = claude.send("Who is president Bush?");
+@end example
+
+The class also supports streaming responses and image inputs.
+
+The static method @code{setUrl(String url)} can be used to override the
+default Anthropic endpoint URL.  This is useful for proxies, gateways, or
+Anthropic-compatible endpoints.  The static method
+@code{setVersion(String version)} can be used to override the
+@code{anthropic-version} request header value (e.g., @code{2023-06-01}).
+Both are global settings that affect all instances.
+
+See that class for documentation.
+
+@section Utilities
+
+@emph{Kiss} includes an ever-growing set of utilities to help deal with common tasks.
+These utilities are located under the @code{src/main/core/org/kissweb} directory and have names such as
+@code{DateTime.java}, @code{NumberFormat}, etc.  These utilities
+are documented in the JavaDocs.
+
+@section Global Logout Handler
+
+@emph{Kiss} provides a mechanism to execute custom code whenever a user
+logs out (manually or due to inactivity timeout).  The handler is
+configured in @code{KissInit.groovy} using
+@code{UserCache.setLogoutHandler()}, which accepts a
+@code{Consumer<UserData>}.
+
+@noindent
+A basic example:
+
+@example
+UserCache.setLogoutHandler(@{ UserData ud ->
+    println "User $@{ud.getUsername()@} is logging out"
+@} as Consumer<UserData>)
+@end example
+
+@noindent
+The @code{UserData} object provides methods such as
+@code{getUsername()}, @code{getUserId()}, @code{getUuid()}, and
+@code{getUserData(String key)}.  If you need database access in the
+handler, open a new connection with
+@code{MainServlet.openNewConnection()} and close it in a
+@code{finally} block.
+
+To log out from the front-end, call @code{Server.logout()}.
+
+For detailed examples and usage patterns, see the @emph{Kiss} book and
+the JavaDocs.

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (Getting Started)</title>
+
+<meta name="description" content="Top (Getting Started)">
+<meta name="keywords" content="Top (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="#Top" rel="start" title="Top">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Introduction.html" rel="next" title="Introduction">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+ul.toc-numbered-mark {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+
+
+
+
+<div class="top-level-extent" id="Top">
+<div class="nav-panel">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+<h1 class="top" id="Kiss-Getting-Started-Guide-_0028_0029"><span>Kiss Getting Started Guide (May 2, 2026)<a class="copiable-link" href="#Kiss-Getting-Started-Guide-_0028_0029"> &para;</a></span></h1>
+
+
+
+
+
+<div class="region-contents" id="SEC_Contents">
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="toc-numbered-mark">
+  <li><a id="toc-Introduction" href="Introduction.html">1 Introduction</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-The-Kiss-Book" href="Introduction.html#The-Kiss-Book">1.1 The Kiss Book</a></li>
+    <li><a id="toc-Writing-Sophisticated-Applications" href="Introduction.html#Writing-Sophisticated-Applications">1.2 Writing Sophisticated Applications</a></li>
+    <li><a id="toc-Kiss-Highlights" href="Introduction.html#Kiss-Highlights">1.3 <em class="emph">Kiss</em> Highlights</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Back_002dend-Highlights" href="Introduction.html#Back_002dend-Highlights">1.3.1 Back-end Highlights</a></li>
+      <li><a id="toc-Front_002dend-Highlights" href="Introduction.html#Front_002dend-Highlights">1.3.2 Front-end Highlights</a></li>
+      <li><a id="toc-Back_002dend-Web-Service-Example" href="Introduction.html#Back_002dend-Web-Service-Example">1.3.3 Back-end Web Service Example</a></li>
+      <li><a id="toc-Front_002dend-Web-Service-Usage-Example" href="Introduction.html#Front_002dend-Web-Service-Usage-Example">1.3.4 Front-end Web Service Usage Example</a></li>
+    </ul></li>
+    <li><a id="toc-Supported-Environments" href="Introduction.html#Supported-Environments">1.4 Supported Environments</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Development-Environment" href="Introduction.html#Development-Environment">1.4.1 Development Environment</a></li>
+      <li><a id="toc-Production-Environment" href="Introduction.html#Production-Environment">1.4.2 Production Environment</a></li>
+      <li><a id="toc-Databases-Supported" href="Introduction.html#Databases-Supported">1.4.3 Databases Supported</a></li>
+      <li><a id="toc-Java" href="Introduction.html#Java">1.4.4 Java</a></li>
+    </ul></li>
+    <li><a id="toc-REST-vs_002e-JSON_002dRPC" href="Introduction.html#REST-vs_002e-JSON_002dRPC">1.5 REST vs. JSON-RPC</a></li>
+    <li><a id="toc-HTML-component-usage" href="Introduction.html#HTML-component-usage">1.6 HTML component usage</a></li>
+    <li><a id="toc-System-Maturity-And-Stability" href="Introduction.html#System-Maturity-And-Stability">1.7 System Maturity And Stability</a></li>
+    <li><a id="toc-Getting-All-Source-Code" href="Introduction.html#Getting-All-Source-Code">1.8 Getting All Source Code</a></li>
+    <li><a id="toc-Support_002c-Contact_002c-And-Links" href="Introduction.html#Support_002c-Contact_002c-And-Links">1.9 Support, Contact, And Links</a></li>
+    <li><a id="toc-License" href="Introduction.html#License">1.10 License</a></li>
+    <li><a id="toc-Acknowledgments" href="Introduction.html#Acknowledgments">1.11 Acknowledgments</a></li>
+  </ul></li>
+  <li><a id="toc-System-Setup" href="System-Setup.html">2 System Setup</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Important" href="System-Setup.html#Important-1">2.1 Important</a></li>
+    <li><a id="toc-Super_002dQuick_002dStart" href="System-Setup.html#Super_002dQuick_002dStart">2.2 Super-Quick-Start</a></li>
+    <li><a id="toc-Quick_002dStart-Checklist" href="System-Setup.html#Quick_002dStart-Checklist-1">2.3 Quick-Start Checklist</a></li>
+    <li><a id="toc-Runtime-Environments" href="System-Setup.html#Runtime-Environments">2.4 Runtime Environments</a></li>
+    <li><a id="toc-Pre_002drequisites" href="System-Setup.html#Pre_002drequisites-1">2.5 Pre-requisites</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Windows" href="System-Setup.html#Windows">2.5.1 Windows</a></li>
+      <li><a id="toc-macOS" href="System-Setup.html#macOS">2.5.2 macOS</a></li>
+    </ul></li>
+    <li><a id="toc-Download-Kiss" href="System-Setup.html#Download-Kiss-1">2.6 Download Kiss</a></li>
+    <li><a id="toc-Quick-Test" href="System-Setup.html#Quick-Test">2.7 Quick Test</a></li>
+    <li><a id="toc-Documentation" href="System-Setup.html#Documentation">2.8 Documentation</a></li>
+    <li><a id="toc-Setup-and-Configuration" href="System-Setup.html#Setup-and-Configuration-1">2.9 Setup and Configuration</a></li>
+    <li><a id="toc-Bypassing-Authentication" href="System-Setup.html#Bypassing-Authentication">2.10 Bypassing Authentication</a></li>
+    <li><a id="toc-Building-The-System" href="System-Setup.html#Building-The-System">2.11 Building The System</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Using-an-IDE" href="System-Setup.html#Using-an-IDE">2.11.1 Using an IDE</a></li>
+    </ul></li>
+    <li><a id="toc-Kiss-Framework-Updates" href="System-Setup.html#Kiss-Framework-Updates">2.12 Kiss Framework Updates</a></li>
+    <li><a id="toc-What-Do-I-Do-With-It-Now_003f" href="System-Setup.html#What-Do-I-Do-With-It-Now_003f">2.13 What Do I Do With It Now?</a></li>
+  </ul></li>
+  <li><a id="toc-Orientation" href="Orientation.html">3 Orientation</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Back_002dend-Application-Files" href="Orientation.html#Back_002dend-Application-Files">3.1 Back-end Application Files</a></li>
+    <li><a id="toc-Front_002dend-Application-Files" href="Orientation.html#Front_002dend-Application-Files">3.2 Front-end Application Files</a></li>
+    <li><a id="toc-Database" href="Orientation.html#Database">3.3 Database</a></li>
+    <li><a id="toc-Single-Page-Application" href="Orientation.html#Single-Page-Application">3.4 Single Page Application</a></li>
+    <li><a id="toc-Controlling-Browser-Cache" href="Orientation.html#Controlling-Browser-Cache">3.5 Controlling Browser Cache</a></li>
+    <li><a id="toc-Creating-JavaDocs" href="Orientation.html#Creating-JavaDocs">3.6 Creating JavaDocs</a></li>
+    <li><a id="toc-Deploying-A-Kiss-Application" href="Orientation.html#Deploying-A-Kiss-Application">3.7 Deploying A Kiss Application</a></li>
+    <li><a id="toc-Learning-The-System" href="Orientation.html#Learning-The-System">3.8 Learning The System</a></li>
+  </ul></li>
+  <li><a id="toc-Developing" href="Developing.html">4 Developing</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Overview" href="Developing.html#Overview">4.1 Overview</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-IDE" href="Developing.html#IDE">4.1.1 IDE</a></li>
+    </ul></li>
+    <li><a id="toc-Back_002dend-Development" href="Developing.html#Back_002dend-Development">4.2 Back-end Development</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-REST-Server" href="Developing.html#REST-Server">4.2.1 REST Server</a>
+      <ul class="toc-numbered-mark">
+        <li><a id="toc-IDE-1" href="Developing.html#IDE-1">4.2.1.1 IDE</a></li>
+        <li><a id="toc-BLD" href="Developing.html#BLD">4.2.1.2 BLD</a></li>
+      </ul></li>
+      <li><a id="toc-Application-Code" href="Developing.html#Application-Code">4.2.2 Application Code</a></li>
+      <li><a id="toc-Cached-User-Data" href="Developing.html#Cached-User-Data">4.2.3 Cached User Data</a></li>
+      <li><a id="toc-Programming-Languages" href="Developing.html#Programming-Languages">4.2.4 Programming Languages</a></li>
+      <li><a id="toc-Cron" href="Developing.html#Cron">4.2.5 Cron</a></li>
+      <li><a id="toc-CORS" href="Developing.html#CORS">4.2.6 CORS</a></li>
+      <li><a id="toc-Unit-Tests" href="Developing.html#Unit-Tests">4.2.7 Unit Tests</a></li>
+    </ul></li>
+    <li><a id="toc-Front_002dend-Development" href="Developing.html#Front_002dend-Development-1">4.3 Front-end Development</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Mobile-Interface" href="Developing.html#Mobile-Interface">4.3.1 Mobile Interface</a></li>
+    </ul></li>
+    <li><a id="toc-Reports-And-Exports" href="Developing.html#Reports-And-Exports">4.4 Reports And Exports</a></li>
+    <li><a id="toc-Authentication" href="Developing.html#Authentication">4.5 Authentication</a></li>
+    <li><a id="toc-The-Build-System" href="Developing.html#The-Build-System">4.6 The Build System</a></li>
+    <li><a id="toc-Using-Artificial-Intelligence" href="Developing.html#Using-Artificial-Intelligence">4.7 Using Artificial Intelligence</a></li>
+  </ul></li>
+  <li><a id="toc-Front_002dend-API" href="Front_002dend-API.html">5 Front-end API</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Calling-REST-Services" href="Front_002dend-API.html#Calling-REST-Services">5.1 Calling REST Services</a></li>
+    <li><a id="toc-Kiss-Components" href="Front_002dend-API.html#Kiss-Components">5.2 Kiss Components</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Tagless-Components" href="Front_002dend-API.html#Tagless-Components">5.2.1 Tagless Components</a></li>
+    </ul></li>
+    <li><a id="toc-Modal-Popup-Windows" href="Front_002dend-API.html#Modal-Popup-Windows">5.3 Modal Popup Windows</a></li>
+    <li><a id="toc-File-Uploads" href="Front_002dend-API.html#File-Uploads">5.4 File Uploads</a></li>
+    <li><a id="toc-Utilities" href="Front_002dend-API.html#Utilities">5.5 Utilities</a></li>
+    <li><a id="toc-Controlling-Browser-Cache-1" href="Front_002dend-API.html#Controlling-Browser-Cache-1">5.6 Controlling Browser Cache</a></li>
+    <li><a id="toc-Additional-Resources" href="Front_002dend-API.html#Additional-Resources">5.7 Additional Resources</a></li>
+  </ul></li>
+  <li><a id="toc-Back_002dend-API" href="Back_002dend-API.html">6 Back-end API</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Database-API" href="Back_002dend-API.html#Database-API">6.1 Database API</a></li>
+    <li><a id="toc-Microservices" href="Back_002dend-API.html#Microservices">6.2 Microservices</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Microservice-Language" href="Back_002dend-API.html#Microservice-Language">6.2.1 Microservice Language</a></li>
+      <li><a id="toc-Types-of-Microservices" href="Back_002dend-API.html#Types-of-Microservices">6.2.2 Types of Microservices</a></li>
+      <li><a id="toc-Remote-Microservices" href="Back_002dend-API.html#Remote-Microservices">6.2.3 Remote Microservices</a></li>
+      <li><a id="toc-Defining-Remote-Services" href="Back_002dend-API.html#Defining-Remote-Services">6.2.4 Defining Remote Services</a></li>
+      <li><a id="toc-Local-Microservices" href="Back_002dend-API.html#Local-Microservices">6.2.5 Local Microservices</a></li>
+      <li><a id="toc-Exceptions" href="Back_002dend-API.html#Exceptions">6.2.6 Exceptions</a></li>
+    </ul></li>
+    <li><a id="toc-JSON" href="Back_002dend-API.html#JSON">6.3 JSON</a></li>
+    <li><a id="toc-Large-Language-Models" href="Back_002dend-API.html#Large-Language-Models">6.4 Large Language Models</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Ollama" href="Back_002dend-API.html#Ollama">6.4.1 Ollama</a></li>
+      <li><a id="toc-OpenAI-_0028chatGPT_0029" href="Back_002dend-API.html#OpenAI-_0028chatGPT_0029">6.4.2 OpenAI (chatGPT)</a></li>
+      <li><a id="toc-Anthropic-_0028Claude_0029" href="Back_002dend-API.html#Anthropic-_0028Claude_0029">6.4.3 Anthropic (Claude)</a></li>
+    </ul></li>
+    <li><a id="toc-Utilities-1" href="Back_002dend-API.html#Utilities-1">6.5 Utilities</a></li>
+    <li><a id="toc-Global-Logout-Handler" href="Back_002dend-API.html#Global-Logout-Handler">6.6 Global Logout Handler</a></li>
+  </ul></li>
+  <li><a id="toc-SQL-Query-Generator" href="SQL-Query-Generator.html">7 SQL Query Generator</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Quick-Start" href="SQL-Query-Generator.html#Quick-Start">7.1 Quick Start</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Building-the-Schema-Graph" href="SQL-Query-Generator.html#Building-the-Schema-Graph">7.1.1 Building the Schema Graph</a>
+      <ul class="toc-numbered-mark">
+        <li><a id="toc-From-Live-Database-Metadata" href="SQL-Query-Generator.html#From-Live-Database-Metadata">7.1.1.1 From Live Database Metadata</a></li>
+        <li><a id="toc-Programmatic-Declaration" href="SQL-Query-Generator.html#Programmatic-Declaration">7.1.1.2 Programmatic Declaration</a></li>
+        <li><a id="toc-Hybrid" href="SQL-Query-Generator.html#Hybrid">7.1.1.3 Hybrid</a></li>
+        <li><a id="toc-Cached-per-Schema-_0028Thread_002dSafe_0029" href="SQL-Query-Generator.html#Cached-per-Schema-_0028Thread_002dSafe_0029">7.1.1.4 Cached per Schema (Thread-Safe)</a></li>
+        <li><a id="toc-Cached-_0028for-Fast-Startup_0029" href="SQL-Query-Generator.html#Cached-_0028for-Fast-Startup_0029">7.1.1.5 Cached (for Fast Startup)</a></li>
+      </ul></li>
+      <li><a id="toc-Building-and-Executing-a-Query" href="SQL-Query-Generator.html#Building-and-Executing-a-Query">7.1.2 Building and Executing a Query</a></li>
+    </ul></li>
+    <li><a id="toc-Further-Information" href="SQL-Query-Generator.html#Further-Information">7.2 Further Information</a></li>
+    <li><a id="toc-Source-Files" href="SQL-Query-Generator.html#Source-Files">7.3 Source Files</a></li>
+  </ul></li>
+  <li><a id="toc-Command-Line-Utility" href="Command-Line-Utility.html">8 Command Line Utility</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Building-The-Utility" href="Command-Line-Utility.html#Building-The-Utility">8.1 Building The Utility</a></li>
+    <li><a id="toc-Using-The-System" href="Command-Line-Utility.html#Using-The-System">8.2 Using The System</a></li>
+    <li><a id="toc-Databases-Other-Than-PostgreSQL" href="Command-Line-Utility.html#Databases-Other-Than-PostgreSQL">8.3 Databases Other Than PostgreSQL</a></li>
+  </ul></li>
+  <li><a id="toc-External-Integrations" href="External-Integrations.html">9 External Integrations</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Integrating-With-External-Systems" href="External-Integrations.html#Integrating-With-External-Systems">9.1 Integrating With External Systems</a></li>
+    <li><a id="toc-LLM-Integration" href="External-Integrations.html#LLM-Integration">9.2 LLM Integration</a></li>
+  </ul></li>
+  <li><a id="toc-Split-System" href="Split-System.html">10 Split System</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Back_002dend_002donly-System" href="Split-System.html#Back_002dend_002donly-System">10.1 Back-end-only System</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Creating" href="Split-System.html#Creating">10.1.1 Creating</a></li>
+      <li><a id="toc-Developing-1" href="Split-System.html#Developing-2">10.1.2 Developing</a></li>
+      <li><a id="toc-Deploying" href="Split-System.html#Deploying">10.1.3 Deploying</a></li>
+      <li><a id="toc-Upgrading" href="Split-System.html#Upgrading">10.1.4 Upgrading</a></li>
+    </ul></li>
+    <li><a id="toc-Front_002dend_002donly-System" href="Split-System.html#Front_002dend_002donly-System">10.2 Front-end-only System</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Creating-1" href="Split-System.html#Creating-1">10.2.1 Creating</a></li>
+      <li><a id="toc-Developing-2" href="Split-System.html#Developing-3">10.2.2 Developing</a></li>
+      <li><a id="toc-Deploying-1" href="Split-System.html#Deploying-1">10.2.3 Deploying</a></li>
+      <li><a id="toc-Upgrading-1" href="Split-System.html#Upgrading-1">10.2.4 Upgrading</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a id="toc-Browser_002dBased-Distribution" href="Browser-Distribution.html">11 Browser-Based Distribution</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Prerequisites" href="Browser-Distribution.html#Prerequisites">11.1 Prerequisites</a></li>
+    <li><a id="toc-Building-the-Distribution" href="Browser-Distribution.html#Building-the-Distribution">11.2 Building the Distribution</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Step-1_003a-Build-the-Application" href="Browser-Distribution.html#Step-1_003a-Build-the-Application">11.2.1 Step 1: Build the Application</a></li>
+      <li><a id="toc-Step-2_003a-Create-the-Distribution" href="Browser-Distribution.html#Step-2_003a-Create-the-Distribution">11.2.2 Step 2: Create the Distribution</a></li>
+    </ul></li>
+    <li><a id="toc-What-the-Distribution-Contains" href="Browser-Distribution.html#What-the-Distribution-Contains">11.3 What the Distribution Contains</a></li>
+    <li><a id="toc-End-User-Instructions" href="Browser-Distribution.html#End-User-Instructions">11.4 End User Instructions</a></li>
+    <li><a id="toc-Comparison-with-Desktop-Application" href="Browser-Distribution.html#Comparison-with-Desktop-Application">11.5 Comparison with Desktop Application</a></li>
+  </ul></li>
+  <li><a id="toc-Desktop-Applications" href="Desktop-Application.html">12 Desktop Applications</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Setup" href="Desktop-Application.html#Setup">12.1 Setup</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-Installing-Nodejs-_0026-Npm" href="Desktop-Application.html#Installing-Nodejs-_0026-Npm">12.1.1 Installing Nodejs &amp; Npm</a></li>
+      <li><a id="toc-Installing-Electron" href="Desktop-Application.html#Installing-Electron">12.1.2 Installing Electron</a></li>
+    </ul></li>
+    <li><a id="toc-Building-_0026-Running" href="Desktop-Application.html#Building-_0026-Running">12.2 Building &amp; Running</a></li>
+    <li><a id="toc-Debug-Mode" href="Desktop-Application.html#Debug-Mode">12.3 Debug Mode</a></li>
+  </ul></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

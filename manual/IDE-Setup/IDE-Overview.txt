@@ -1,0 +1,28 @@
+
+IDE Summary
+
+Items:
+
+1.  Debugger supports dynamically changing back-end files (microservices)
+
+2.  Support for JavaScript
+
+3.  IDE free
+
+
+                        1       2       3
+IntelliJ Ultimate       Y       Y       N
+IntelliJ Community      Y       N       Y
+NetBeans                N       Y       Y
+eclipse                 Y       N       Y
+VSCode                  ?       Y       Y
+
+
+IntelliJ Ultimate is clearly the best choice.  However, especially
+when used in a commercial environment, IntelliJ can be very expensive.
+
+NetBeans will be the best choice if they fix their debugger.
+
+eclipse will be the best choice if they fix their JavaScript support.
+
+

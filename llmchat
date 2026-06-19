@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+#
+# LLMChat launcher / dispatcher.
+#
+#   ./llmchat            start the terminal interface (default)
+#   ./llmchat --cli      same as the default
+#   ./llmchat --web      start the web interface (Kiss server + browser UI)
+#   ./llmchat --check    print Ollama/OwnSona status and exit (CLI mode)
+#   ./llmchat --help     show CLI help
+#
+# Both interfaces share the same logic (llmchat.ChatEngine); they differ only in
+# presentation.  CLI mode runs a standalone JVM (no web server); web mode starts
+# the Kiss/Tomcat dev server.  Build first if needed:  ./bld build
+#
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$DIR"
+
+# Split out the mode flags; everything else is forwarded to the CLI.  The
+# -m/--model value is also captured so it can override the model in web mode.
+MODE=cli
+MODEL=""
+ARGS=()
+expect_model=0
+for a in "$@"; do
+    if [ "$expect_model" = "1" ]; then
+        MODEL="$a"; ARGS+=("$a"); expect_model=0; continue
+    fi
+    case "$a" in
+        --web)        MODE=web ;;
+        --cli)        MODE=cli ;;
+        -m|--model)   ARGS+=("$a"); expect_model=1 ;;
+        *)            ARGS+=("$a") ;;
+    esac
+done
+
+if [ "$MODE" = "web" ]; then
+    echo "Starting LLMChat web interface (Kiss server)…"
+    echo "  Frontend: http://localhost:8000    Backend: http://localhost:8080"
+    if [ -n "$MODEL" ]; then
+        echo "  Model override: $MODEL"
+        exec env LLMCHAT_MODEL="$MODEL" ./bld develop
+    fi
+    exec ./bld develop
+fi
+
+# ----- CLI mode -----
+CLASSES="$DIR/work/exploded/WEB-INF/classes"
+LIB="$DIR/work/exploded/WEB-INF/lib"
+BACKEND="$DIR/src/main/backend"
+
+if [ ! -f "$CLASSES/llmchat/Cli.class" ]; then
+    echo "LLMChat is not built yet. Run:  ./bld build" >&2
+    exit 1
+fi
+
+exec java \
+    -Dlog4j2.configurationFile="$DIR/cli-log4j2.xml" \
+    -cp "$CLASSES:$LIB/*" \
+    llmchat.Cli "$BACKEND" ${ARGS[@]+"${ARGS[@]}"}

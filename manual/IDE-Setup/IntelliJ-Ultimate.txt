@@ -1,0 +1,72 @@
+Kiss IntelliJ - Ultimate Edition
+
+Tried on version 2022.2.3
+
+Although the Ultimate (commercial) version of IntelliJ costs money, it
+is probably the most powerful, reliable, and best supported IDE.
+Kiss works well with it.  On the other hand, like other IDE's,
+IntelliJ can be a bit tedious to configure properly.  The following
+steps can be used to configure IntelliJ.
+
+The file "pom.xml" is only used to describe dependencies to GitHub.
+Kiss is not a Maven project.  Unfortunately, most IDE's see the pom.xml
+file and assume a Maven project.  For this reason, the pom.xml usually
+needs to be deleted before engaging an IDE.
+
+
+From command line:
+    rm pom.xml
+	./bld all	[Linux, Mac]
+	  -or-
+	bld all		[Windows]
+Open (not "New Project") with IntelliJ
+Add Ant build (message in lower right-hand corner)
+
+Right-click on "Kiss" at the top of the Project pane and select
+"Open Module Settings".
+
+Project
+	Edit as needed
+	Compiler output is unused
+Modules
+	Remove all modules except "Kiss"
+	Sources
+		Mark as source
+			src/main/backend
+			src/main/core
+		Mark as excluded
+			work
+			tomcat
+	Dependencies
+		Java
+		<Module source>
+		libs
+Libraries
+	libs
+		(all jar files in the libs directory)
+Facets - none
+Artifacts - none
+Global Libraries - none
+
+
+Run the front-end and back-end servers by typing the following at the
+command-line:
+
+./bld develop		[Linux, Mac]
+     or
+bld develop 		[Windows]
+
+Attach IntelliJ to the back-end server started with the above command:
+
+	Run / Attach to Process
+	(select port 9000)
+
+Back-end code is debugged through IntelliJ.  Front-end debugging
+occurs through the browser developer console.  Be sure browser
+network caching is disabled.
+
+You can now develop and debug.  Front-end changes will take effect on
+page reload.  Back-end changes take effect immediately.  Just be sure
+you have browser caching turned off on your browser development
+console.
+

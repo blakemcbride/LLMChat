@@ -1,0 +1,103 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 2023 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+@node Desktop Application
+
+@html
+@include style.css
+@end html
+
+@chapter Desktop Applications
+
+Portable desktop
+applications can be built utilizing @emph{Kiss} in conjunction with
+Electron (@uref{https://electronjs.org}).  These
+applications would be portable to Linux, macOS, Windows, BSD, and other
+platforms with a single codebase.
+
+Both the front-end and back-end are built exactly as a browser-based application would be built.
+The only difference is how the system is run.
+
+@section Setup
+
+Before a desktop application can be built, the @emph{electron} system must be installed.
+This, in turn, is dependent on @emph{nodejs} and @emph{npm}.
+
+@subsection Installing Nodejs & Npm
+
+Full instructions to install @emph{nodejs} and @emph{npm} can be found at
+@uref{https://nodejs.org}
+
+Linux systems that use the @emph{apt} package manager can install  @emph{nodejs} and @emph{npm} with the following command: 
+
+@example
+sudo apt install nodejs npm
+@end example
+
+Linux systems that use the @emph{dnf} package manager can install  @emph{nodejs} and @emph{npm} with the following command: 
+
+@example
+sudo dnf install nodejs
+@end example
+
+Other systems can install  @emph{nodejs} and @emph{npm} as instructed at
+@uref{https://nodejs.org}
+
+@subsection Installing Electron
+
+You can install @emph{electron} on any OS from within the @emph{KISS} application with the following command:
+
+@example
+npm install electron --save-dev
+@end example
+
+@section Building & Running
+
+The @emph{KISS} application is built no differently than if it were a browser application.  You can use the following command:
+
+You can build the system with the following command:
+
+@example
+./bld build              [all OS except Windows]
+    or
+bld build                [Windows]
+@end example
+
+The system can be run as an application by executing the following command:
+
+@example
+npm start
+@end example
+
+@section Debug Mode
+
+If you are developing and need the front-end developer tools, simply edit the file named @emph{start-electron.js}
+Change the value of the variable named @emph{devMode} from @emph{false} to @emph{true}.  Then just start normally.
+
+When you do this, you will get the beloved developer tools window along with the application.

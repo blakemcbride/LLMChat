@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# I've found that I often use multiple front-ends with a single back-end.
+# So, these additional front-ends do not have their own back-end.  This
+# script removes the back-end portion of the system to give me a convenient 
+# starting point for a front-end-only project.
+
+if [ $# -ne 1 ] || [ 'remove' != $1 ]; then
+	echo
+	echo 'This script removes the back-end portion of Kiss'
+	echo
+	echo Usage: $0 remove
+	echo
+	exit
+fi
+
+
+rm -rf .git* libs bld* build* init* KissGP* LIC* manual pom.xml README.md
+rm -rf runcmd test.csv upgrade-* view-log
+rm -rf src/main/backend src/main/core src/test
+rm -rf CONTRIBUTING.md notes remove-frontend*

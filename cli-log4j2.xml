@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Log configuration for the standalone LLMChat CLI (the ./llmchat launcher
+  points log4j here via -Dlog4j2.configurationFile).  status="WARN" silences
+  log4j's own startup chatter, and application logs go to STDERR at ERROR level
+  so the chat REPL on STDOUT stays clean.
+-->
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{HH:mm:ss} [%-5p] %c{1} - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

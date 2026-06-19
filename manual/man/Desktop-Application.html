@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Desktop Application (Getting Started)</title>
+
+<meta name="description" content="Desktop Application (Getting Started)">
+<meta name="keywords" content="Desktop Application (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Browser-Distribution.html" rel="prev" title="Browser Distribution">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter-level-extent" id="Desktop-Application">
+<div class="nav-panel">
+<p>
+Previous: <a href="Browser-Distribution.html" accesskey="p" rel="prev">Browser-Based Distribution</a>, Up: <a href="index.html" accesskey="u" rel="up">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+<h2 class="chapter" id="Desktop-Applications"><span>12 Desktop Applications<a class="copiable-link" href="#Desktop-Applications"> &para;</a></span></h2>
+
+<p>Portable desktop
+applications can be built utilizing <em class="emph">Kiss</em> in conjunction with
+Electron (<a class="uref" href="https://electronjs.org">https://electronjs.org</a>).  These
+applications would be portable to Linux, macOS, Windows, BSD, and other
+platforms with a single codebase.
+</p>
+<p>Both the front-end and back-end are built exactly as a browser-based application would be built.
+The only difference is how the system is run.
+</p>
+<ul class="mini-toc">
+<li><a href="#Setup" accesskey="1">Setup</a></li>
+<li><a href="#Building-_0026-Running" accesskey="2">Building &amp; Running</a></li>
+<li><a href="#Debug-Mode" accesskey="3">Debug Mode</a></li>
+</ul>
+<div class="section-level-extent" id="Setup">
+<h3 class="section"><span>12.1 Setup<a class="copiable-link" href="#Setup"> &para;</a></span></h3>
+
+<p>Before a desktop application can be built, the <em class="emph">electron</em> system must be installed.
+This, in turn, is dependent on <em class="emph">nodejs</em> and <em class="emph">npm</em>.
+</p>
+<ul class="mini-toc">
+<li><a href="#Installing-Nodejs-_0026-Npm" accesskey="1">Installing Nodejs &amp; Npm</a></li>
+<li><a href="#Installing-Electron" accesskey="2">Installing Electron</a></li>
+</ul>
+<div class="subsection-level-extent" id="Installing-Nodejs-_0026-Npm">
+<h4 class="subsection"><span>12.1.1 Installing Nodejs &amp; Npm<a class="copiable-link" href="#Installing-Nodejs-_0026-Npm"> &para;</a></span></h4>
+
+<p>Full instructions to install <em class="emph">nodejs</em> and <em class="emph">npm</em> can be found at
+<a class="uref" href="https://nodejs.org">https://nodejs.org</a>
+</p>
+<p>Linux systems that use the <em class="emph">apt</em> package manager can install  <em class="emph">nodejs</em> and <em class="emph">npm</em> with the following command: 
+</p>
+<div class="example">
+<pre class="example-preformatted">sudo apt install nodejs npm
+</pre></div>
+
+<p>Linux systems that use the <em class="emph">dnf</em> package manager can install  <em class="emph">nodejs</em> and <em class="emph">npm</em> with the following command: 
+</p>
+<div class="example">
+<pre class="example-preformatted">sudo dnf install nodejs
+</pre></div>
+
+<p>Other systems can install  <em class="emph">nodejs</em> and <em class="emph">npm</em> as instructed at
+<a class="uref" href="https://nodejs.org">https://nodejs.org</a>
+</p>
+</div>
+<div class="subsection-level-extent" id="Installing-Electron">
+<h4 class="subsection"><span>12.1.2 Installing Electron<a class="copiable-link" href="#Installing-Electron"> &para;</a></span></h4>
+
+<p>You can install <em class="emph">electron</em> on any OS from within the <em class="emph">KISS</em> application with the following command:
+</p>
+<div class="example">
+<pre class="example-preformatted">npm install electron --save-dev
+</pre></div>
+
+</div>
+</div>
+<div class="section-level-extent" id="Building-_0026-Running">
+<h3 class="section"><span>12.2 Building &amp; Running<a class="copiable-link" href="#Building-_0026-Running"> &para;</a></span></h3>
+
+<p>The <em class="emph">KISS</em> application is built no differently than if it were a browser application.  You can use the following command:
+</p>
+<p>You can build the system with the following command:
+</p>
+<div class="example">
+<pre class="example-preformatted">./bld build              [all OS except Windows]
+    or
+bld build                [Windows]
+</pre></div>
+
+<p>The system can be run as an application by executing the following command:
+</p>
+<div class="example">
+<pre class="example-preformatted">npm start
+</pre></div>
+
+</div>
+<div class="section-level-extent" id="Debug-Mode">
+<h3 class="section"><span>12.3 Debug Mode<a class="copiable-link" href="#Debug-Mode"> &para;</a></span></h3>
+
+<p>If you are developing and need the front-end developer tools, simply edit the file named <em class="emph">start-electron.js</em>
+Change the value of the variable named <em class="emph">devMode</em> from <em class="emph">false</em> to <em class="emph">true</em>.  Then just start normally.
+</p>
+<p>When you do this, you will get the beloved developer tools window along with the application.
+</p>
+
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Previous: <a href="Browser-Distribution.html">Browser-Based Distribution</a>, Up: <a href="index.html">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

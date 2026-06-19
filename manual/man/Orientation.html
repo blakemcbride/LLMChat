@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Orientation (Getting Started)</title>
+
+<meta name="description" content="Orientation (Getting Started)">
+<meta name="keywords" content="Orientation (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Developing.html" rel="next" title="Developing">
+<link href="System-Setup.html" rel="prev" title="System Setup">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter-level-extent" id="Orientation">
+<div class="nav-panel">
+<p>
+Next: <a href="Developing.html" accesskey="n" rel="next">Developing</a>, Previous: <a href="System-Setup.html" accesskey="p" rel="prev">System Setup</a>, Up: <a href="index.html" accesskey="u" rel="up">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+<h2 class="chapter" id="Orientation-1"><span>3 Orientation<a class="copiable-link" href="#Orientation-1"> &para;</a></span></h2>
+
+
+<p>The entire source code comes with the system and is convenient when
+debugging.  <em class="emph">Kiss</em> has been designed to segregate <em class="emph">Kiss</em>
+framework code from your application code for two reasons:
+</p>
+<ol class="enumerate">
+<li> It makes it easy to differentiate framework code from your application code minimizing
+the code you have to look at when developing your application.
+</li><li> It makes upgrading the <em class="emph">Kiss</em> framework simple and accurate.
+</li></ol>
+
+<p>Naturally, in order for this to work, it is important that you not change framework code
+and put all of your application code in the correct areas.
+</p>
+<ul class="mini-toc">
+<li><a href="#Back_002dend-Application-Files" accesskey="1">Back-end Application Files</a></li>
+<li><a href="#Front_002dend-Application-Files" accesskey="2">Front-end Application Files</a></li>
+<li><a href="#Database" accesskey="3">Database</a></li>
+<li><a href="#Single-Page-Application" accesskey="4">Single Page Application</a></li>
+<li><a href="#Controlling-Browser-Cache" accesskey="5">Controlling Browser Cache</a></li>
+<li><a href="#Creating-JavaDocs" accesskey="6">Creating JavaDocs</a></li>
+<li><a href="#Deploying-A-Kiss-Application" accesskey="7">Deploying A Kiss Application</a></li>
+<li><a href="#Learning-The-System" accesskey="8">Learning The System</a></li>
+</ul>
+<div class="section-level-extent" id="Back_002dend-Application-Files">
+<h3 class="section"><span>3.1 Back-end Application Files<a class="copiable-link" href="#Back_002dend-Application-Files"> &para;</a></span></h3>
+
+<p>Some back-end code is normal code that gets pre-compiled at build time,
+as most systems do &mdash; as the <em class="emph">Kiss</em> core framework code is.
+However, some <em class="emph">Kiss</em> code (the majority of the application code)
+is <em class="emph">hot-loaded</em> at runtime.  What this means is that code that is
+hot-loaded can be added, changed, or deleted on a running system.  
+There is no need to bring the system down or rebuild anything. In a development
+environment, development and debugging occur while the system is
+running continuously.  There is no need to bring the system down or rebuild
+anything.  A production system can be updated while the system is
+running without the need to reboot the server or upset normal user use
+of the system.
+</p>
+<p>All back-end code resides in the following directories:
+</p>
+
+<dl class="table">
+<dt><code class="code">src/main/backend</code></dt>
+<dd><p>The vast majority of your application-specific code goes in this directory tree. 
+All files in this directory tree (except <code class="code">KissInit.groovy</code> and <code class="code">application.ini</code>) are hot-loaded. 
+</p>
+<p>This directory contains the following:
+</p><dl class="table">
+<dt><code class="code">services</code></dt>
+<dd><p>This is where all of your web services will be located.  You can structure sub-directories to it as needed.
+Web services can call any core <em class="emph">Kiss</em> code, <em class="emph">jar</em> files, or <code class="code">precompiled</code> code directly.
+However, although web services can call other hot-loaded files located in the <code class="code">backend</code> tree,
+a special syntax is required.  There is an example of this in <code class="code">services/MyGroovyService.groovy</code>.
+</p>
+<p>Unlike other coding philosophies that prefer thin web services that
+call core code, <em class="emph">Kiss</em> strongly prefers thick web services that
+contain the bulk of your application code.  This maximizes the use and
+value of the hot-load facility.
+</p></dd>
+<dt><code class="code">scripts</code></dt>
+<dd><p>This directory contains code that is not web services but common
+application code that is to be hot-loaded.  However, there is a big
+negative associated with this code.  While hot-loaded web services can
+directly call <em class="emph">Kiss</em> core code, <em class="emph">jar</em> files, and
+<code class="code">precompiled</code> code, they can&rsquo;t call methods in the scripts
+directory directly.  They must use a convoluted syntax enabling the
+hot-loading of those methods. An example of this exists in the
+<code class="code">services/MyGroovyService.groovy</code>.
+</p>
+</dd>
+<dt><code class="code">application.ini</code></dt>
+<dd><p>This file configures the system parameters.  It sets various system
+parameters such as database configuration, threads, and other system
+parameters. See <a class="xref" href="System-Setup.html#Setup-and-Configuration">Setup and Configuration</a>
+</p>
+</dd>
+<dt><code class="code">KissInit.groovy</code></dt>
+<dd><p>This file is read once upon system
+startup and is not hot-loaded.  It loads <code class="code">application.ini</code> and can be used to perform other startup tasks.
+See <a class="xref" href="System-Setup.html#Setup-and-Configuration">Setup and Configuration</a>
+</p>
+</dd>
+<dt><code class="code">Login.groovy</code></dt>
+<dd><p>This is the code that validates a user&rsquo;s login.  It is kept here because it is common for application 
+customization of the login process.
+</p>
+</dd>
+<dt><code class="code">CronTasks</code></dt>
+<dd><p>Files in this directory support the ability to auto-start processes at
+scheduled and recurring dates and times ala Unix <em class="emph">cron</em>.  See the
+files in that directory for documentation.
+</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt><code class="code">src/main/precompiled</code></dt>
+<dd>
+<p>Code in this directory tree is compiled at build time and not hot-loaded.  This directory tree is used to
+store common application-specific code that gets compiled into the system.  Whenever code in this directory tree
+is changed, the application must be rebuilt.
+</p>
+</dd>
+<dt><code class="code">src/main/core</code></dt>
+<dd><p><em class="emph">Kiss</em> core back-end framework code resides in this directory tree. Nothing in this directory tree should be 
+modified by you because it will be overwritten when <em class="emph">Kiss</em> is upgraded.  (See <a class="xref" href="System-Setup.html#updates">updates</a>)
+</p>
+</dd>
+</dl>
+
+
+</div>
+<div class="section-level-extent" id="Front_002dend-Application-Files">
+<h3 class="section"><span>3.2 Front-end Application Files<a class="copiable-link" href="#Front_002dend-Application-Files"> &para;</a></span></h3>
+
+<p>Files under the <code class="code">src/main/frontend</code> directory represent the
+front-end of the application.
+</p>
+<p>All files under the <code class="code">src/main/frontend/kiss</code> directory are part of
+the <em class="emph">Kiss</em> system.  Nothing in this directory tree should be 
+modified by you because it will be overwritten when <em class="emph">Kiss</em> is upgraded.  (See <a class="xref" href="System-Setup.html#updates">updates</a>)
+</p>
+<p><code class="code">index.html</code> and <code class="code">index.js</code> are also part of the <em class="emph">Kiss</em>
+system and aren&rsquo;t normally modified.  They contain code that ensures
+that browsers load updated code.
+</p>
+<p><code class="code">index.html</code> contains three important variables that assure that users correctly load 
+front-end code that has been changed rather than using their cached version.  These variables are as follows:
+</p>
+<dl class="table">
+<dt><code class="code">SystemInfo.softwareVersion</code></dt>
+<dd><p>This can be set to any unique string.  When the system is in production use, if this string changes,
+the browser will load new copies of all front-end files (which it will cache for future use).
+If any front-end files are changed, this variable should be changed.  The users will get the new screens 
+after they log out and back into the system.
+</p>
+</dd>
+<dt><code class="code">SystemInfo.controlCache</code></dt>
+<dd>
+<p>Setting this variable to <code class="code">true</code> tells the system to observe the value in <code class="code">SystemInfo.softwareVersion</code>
+and re-load the front-end screens if its value changes.
+</p>
+<p>The value of this variable is often set to <code class="code">false</code> during the development process to avoid double-loading
+of certain files.   When debugging the front-end, be sure to disable the browser cache.
+</p>
+</dd>
+<dt><code class="code">SystemInfo.releaseDate</code></dt>
+<dd><p>This variable is used to track the release date of a given front-end.  It is used for display purposes only.
+</p>
+</dd>
+</dl>
+
+<p>In addition to differentiating between development and production environments, <code class="code">index.js</code>
+is also used to detect the user&rsquo;s device type (e.g., desktop, tablet, mobile) and, if desired, 
+load different application screens.
+</p>
+
+<p><code class="code">login.html</code> and <code class="code">login.js</code> represent the user login page
+and should be modified to suit your needs.
+</p>
+<p>Other directories such as <code class="code">page1</code> represent other user pages and
+would be the application-specific screens you create.  The included
+<code class="code">page1</code> directory is only an example page.
+</p>
+</div>
+<div class="section-level-extent" id="Database">
+<h3 class="section"><span>3.3 Database<a class="copiable-link" href="#Database"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> supports Microsoft SQL Server, Oracle, PostgreSQL, MySQL, and
+SQLite.
+</p>
+<p>As shipped, <em class="emph">Kiss</em> comes configured with an embedded SQLite
+server and database.  While this is fine for a demo or small
+application, a real database should be configured for real use.
+The included database is located in the <code class="code">backend</code> directory
+and is named <code class="code">DB.sqlite</code>
+</p>
+<p>Although <em class="emph">Kiss</em> has no preferred database, PostgreSQL is strongly
+recommended because it is free, full-featured, fast, rock solid, and
+portable on all major platforms.
+</p>
+<p>See <a class="xref" href="System-Setup.html#Setup-and-Configuration">Setup and Configuration</a>
+</p>
+
+</div>
+<div class="section-level-extent" id="Single-Page-Application">
+<h3 class="section"><span>3.4 Single Page Application<a class="copiable-link" href="#Single-Page-Application"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> applications are single-page applications in the sense
+that there is a single <code class="code">&lt;body&gt;</code> tag and all other pages
+essentially get placed into that tag on a single page.  However,
+<em class="emph">Kiss</em> is not a single-page application in the sense that the
+entire application gets loaded with a single <code class="code">GET</code> request.  This
+doesn&rsquo;t make sense for a large business application in which many
+hundreds of pages may exist.  <em class="emph">Kiss</em> lazy-loads pages as they are
+used, and except for browser cache, eliminates them once another page
+is loaded.
+</p>
+</div>
+<div class="section-level-extent" id="Controlling-Browser-Cache">
+<h3 class="section"><span>3.5 Controlling Browser Cache<a class="copiable-link" href="#Controlling-Browser-Cache"> &para;</a></span></h3>
+
+<p>As discussed previously, the user&rsquo;s browser cache can be controlled from the file
+<code class="code">src/main/frontend/index.html</code>. In that file, you will see two lines
+that look as follows:
+</p>
+<div class="example">
+<pre class="example-preformatted">SystemInfo.softwareVersion = &quot;1&quot;;  // version of the entire system
+SystemInfo.controlCache = false;   // normally true but use false during
+                            // debugging
+</pre></div>
+
+<p>If <code class="code">SystemInfo.controlCache</code> is set to <code class="code">true</code>, each time <code class="code">SystemInfo.softwareVersion</code>
+is incremented, all users starting the application will be forced to
+load new code from the server and not use their browser&rsquo;s cache.  Once
+they download the new version, normal browser cache activity will
+occur.
+</p>
+<p>Users using the system when front-end files are changed will not get
+the updated files until they log out and back into the system.  In a
+development environment with browser cache disabled, the developer
+will see all screen changes upon reload, regardless of the variable settings.
+In fact, it is better to set <code class="code">SystemInfo.controlCache</code> to <code class="code">false</code>
+in a development environment to avoid a needless duplicate load of <code class="code">index.html</code>.
+</p>
+
+<a class="anchor" id="javadoc"></a></div>
+<div class="section-level-extent" id="Creating-JavaDocs">
+<h3 class="section"><span>3.6 Creating JavaDocs<a class="copiable-link" href="#Creating-JavaDocs"> &para;</a></span></h3>
+
+<p>JavaDocs for the <em class="emph">Kiss</em> system will need to be created.  They are
+created from the command line by issuing the following command:
+</p>
+<div class="example">
+<pre class="example-preformatted">./bld javadoc              [Linux, macOS, BSD, etc.]
+    -or-
+bld javadoc                [Windows]
+</pre></div>
+
+<p>The JavaDoc files end up in the <code class="code">work/javadoc</code> directory.
+</p>
+
+</div>
+<div class="section-level-extent" id="Deploying-A-Kiss-Application">
+<h3 class="section"><span>3.7 Deploying A Kiss Application<a class="copiable-link" href="#Deploying-A-Kiss-Application"> &para;</a></span></h3>
+
+<p>The only file needed to deploy the application is <code class="code">Kiss.war</code> It
+can be built by typing <code class="code">./bld war</code> at a command prompt.
+<code class="code">Kiss.war</code> ends up in the <code class="code">work</code> directory.  If you
+have your IDE create the <code class="code">Kiss.war</code> file, it will likely not
+work.  The <em class="emph">Kiss</em> system requires a special build process because
+application files are distributed in source form.  Therefore, <code class="code">bld</code>
+should be used to create the production WAR file.
+</p>
+<p>If using <em class="emph">Tomcat</em>, <code class="code">Kiss.war</code> should be placed in the
+<code class="code">webapps</code> directory.  When <em class="emph">Tomcat</em> starts, it will see the
+file, unpack it, and run it.  The application will be available at
+<code class="code">[HOST]/Kiss</code>
+</p>
+<p>Renaming <code class="code">Kiss.war</code> to <code class="code">ABC.war</code>, for example, will cause
+the application path to change to <code class="code">[HOST]/ABC</code>
+</p>
+</div>
+<div class="section-level-extent" id="Learning-The-System">
+<h3 class="section"><span>3.8 Learning The System<a class="copiable-link" href="#Learning-The-System"> &para;</a></span></h3>
+
+<p>In order to start getting a feel for how <code class="code">Kiss</code> applications
+function, in terms of the back-end, look at files in the
+<code class="code">src/main/backend/services</code> directory.  With <code class="code">Kiss</code> you can
+develop applications in several different languages.  The <code class="code">services</code>
+example shows the same code in all of the supported languages.
+</p>
+<p>In terms of the front-end, see the example files under <code class="code">src/main/frontend/page1</code>
+</p>
+
+
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Developing.html">Developing</a>, Previous: <a href="System-Setup.html">System Setup</a>, Up: <a href="index.html">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

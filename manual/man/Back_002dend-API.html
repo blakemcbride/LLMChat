@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Back-end API (Getting Started)</title>
+
+<meta name="description" content="Back-end API (Getting Started)">
+<meta name="keywords" content="Back-end API (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="SQL-Query-Generator.html" rel="next" title="SQL Query Generator">
+<link href="Front_002dend-API.html" rel="prev" title="Front-end API">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter-level-extent" id="Back_002dend-API">
+<div class="nav-panel">
+<p>
+Next: <a href="SQL-Query-Generator.html" accesskey="n" rel="next">SQL Query Generator</a>, Previous: <a href="Front_002dend-API.html" accesskey="p" rel="prev">Front-end API</a>, Up: <a href="index.html" accesskey="u" rel="up">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+<h2 class="chapter" id="Back_002dend-API-1"><span>6 Back-end API<a class="copiable-link" href="#Back_002dend-API-1"> &para;</a></span></h2>
+
+<p>In addition to the full API provided by the Java system and any additional
+JAR files you add, <em class="emph">Kiss</em> comes with an API that assists with the
+development of business application with <em class="emph">Kiss</em>.  These 
+API&rsquo;s may be broadly grouped as follows:
+</p>
+<ol class="enumerate">
+<li> Database API
+</li><li> JSON API
+</li><li> Utilities
+</li></ol>
+
+<p>An overview of these APIs is contained in this chapter.  Detailed
+documentation is contained in the JavaDocs (See <a class="xref" href="Orientation.html#javadoc">Creating
+JavaDocs</a>) and in the <em class="emph">Kiss</em> book, which provides comprehensive
+coverage with worked examples.
+</p>
+<ul class="mini-toc">
+<li><a href="#Database-API" accesskey="1">Database API</a></li>
+<li><a href="#Microservices" accesskey="2">Microservices</a></li>
+<li><a href="#JSON" accesskey="3">JSON</a></li>
+<li><a href="#Large-Language-Models" accesskey="4">Large Language Models</a></li>
+<li><a href="#Utilities-1" accesskey="5">Utilities</a></li>
+<li><a href="#Global-Logout-Handler" accesskey="6">Global Logout Handler</a></li>
+</ul>
+<div class="section-level-extent" id="Database-API">
+<h3 class="section"><span>6.1 Database API<a class="copiable-link" href="#Database-API"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> comes with a powerful library for accessing SQL databases.
+Code for this is located under <code class="code">org.kissweb.database</code> It is
+currently being used in production environments.  This API provides
+the following benefits:
+</p>
+<ul class="itemize mark-bullet">
+<li>Automatic connection and statement pooling
+</li><li>Vastly simpler API than bare JDBC
+</li><li>Handling of parameterized arguments
+</li><li>Auto generation of SQL for single record adds, edits, and deletions
+</li><li>Auto handling for cases of cursor interference on nested queries
+</li><li>Supports transactions out-of-the-box
+</li></ul>
+
+<p>As shipped, this library supports PostgreSQL, Microsoft Server,
+Oracle, MySQL, and SQLite.
+</p>
+<p>The detailed documentation for the database utilities is in the
+JavaDocs which you must generate. (See <a class="xref" href="Orientation.html#javadoc">Creating JavaDocs</a>.)
+This section provides an overview.
+</p>
+<p>The <em class="emph">Kiss</em> database routines revolve around four main classes as follows:
+</p>
+<dl class="table">
+<dt><code class="code">Connection</code></dt>
+<dd><p>This represents a connection to an SQL database.
+</p></dd>
+<dt><code class="code">Command</code></dt>
+<dd><p>This represents a single action or command against the database.
+</p></dd>
+<dt><code class="code">Cursor</code></dt>
+<dd><p>If the action is a <code class="code">select</code>, the <code class="code">Cursor</code> represents a
+pointer into the result set.
+</p></dd>
+<dt><code class="code">Record</code></dt>
+<dd><p>This class represents a single row within a table or result set.
+</p></dd>
+</dl>
+
+<p>The <code class="code">Connection</code> class contains several convenience methods that
+are used in simple cases where only a single action is being
+performed.  These methods should not be used when multiple
+simultaneous actions are taking place at once (by that single thread).
+This issue is not a problem in multi-user or multi-threaded
+situations.  It is only a problem when a single thread is doing one
+action while another action is still open.
+</p>
+<p>You will notice that your REST services are passed a <em class="emph">Connection</em>
+argument.  <em class="emph">Kiss</em> automatically forms a unique connection for
+each REST service call and closes it when the call is done.
+Therefore, you will not normally need to create your own connection.
+Additionally, <em class="emph">Kiss</em> automatically starts a new transaction with
+each REST service and commits it when the service is done.  However,
+if the service throws any exception, the transaction is rolled back
+instead.
+</p>
+<p>You would not normally write SQL for single record adds, updates, and
+deletes.  Using the <em class="emph">Record</em> API, <code class="code">Kiss</code> automatically
+generates these statements for you.
+</p>
+<p>In addition to the above, these utilities provide full support for transactions and parameters.
+</p>
+</div>
+<div class="section-level-extent" id="Microservices">
+<h3 class="section"><span>6.2 Microservices<a class="copiable-link" href="#Microservices"> &para;</a></span></h3>
+
+<p>Microservices are classes that may be added, changed, or deleted while
+the system is running.  In spite of this, however, all microservices
+are fully compiled and run at full speed.  This has two major advantages.
+</p>
+<p>First, in a development environment, all development may be done without 
+the need to bring the development server down, rebuild, re-deploy, and reboot
+the development server.  This means development time is significantly reduced.
+Additionally, IDE debuggers function in an environment such as this, so
+the debugging process may proceed normally.
+</p>
+<p>Second, in a production environment, the system may be upgraded
+without disrupting existing users on the system.  Of course, users
+actively using the exact features you have just changed could be
+affected (if their front-end and back-end do not agree).
+A simple re-try would put everything back in sync.
+</p>
+<p>Kiss microservices are on a class basis.  What that means is that a
+microservice is always a single and whole class.  You cannot have more
+than one class in a microservice.  Microservices can call
+core components of the system just as regular methods can.  However,
+if one wishes to have one microservice call another microservice,
+the calling mechanism is a little more clunky.  However, using this
+clunkier mechanism retains all of the dynamic features of the system.
+</p>
+<p>Defining microservices in Kiss involves defining a normal class just
+as you would write a class in any circumstance.  No special
+configuration, wiring, declarations, or additional steps are required.
+Microservice additions, changes, and deletions take effect as soon as
+you save the source file.  All microservices are compiled at runtime
+by the system automatically, so there is no compilation step that
+you need to perform.
+</p>
+<p>The only caveat to the above is that remote microservices (described
+below) expect a certain method signature (standard arguments).  This
+is only to assure that the front-end and back-end can communicate as
+expected.  Local microservices do not have this requirement.
+</p>
+<ul class="mini-toc">
+<li><a href="#Microservice-Language" accesskey="1">Microservice Language</a></li>
+<li><a href="#Types-of-Microservices" accesskey="2">Types of Microservices</a></li>
+<li><a href="#Remote-Microservices" accesskey="3">Remote Microservices</a></li>
+<li><a href="#Defining-Remote-Services" accesskey="4">Defining Remote Services</a></li>
+<li><a href="#Local-Microservices" accesskey="5">Local Microservices</a></li>
+<li><a href="#Exceptions" accesskey="6">Exceptions</a></li>
+</ul>
+<div class="subsection-level-extent" id="Microservice-Language">
+<h4 class="subsection"><span>6.2.1 Microservice Language<a class="copiable-link" href="#Microservice-Language"> &para;</a></span></h4>
+
+<p>In Kiss, microservices can be written in Java, Groovy, or Common Lisp.
+However, Groovy microservices have been used exclusively in all
+current environments that we are aware of.  Therefore, Groovy
+microservices are best tested.
+</p>
+<p>The reasons Groovy was used are as follows:
+</p>
+<ol class="enumerate">
+<li> Groovy was the easiest and most natural to implement.
+</li><li> Groovy runs as fast as Java and has full and natural access to all 
+Java facilities.
+</li><li> The actual loading of Groovy services is the fastest of the three languages.
+</li><li> Groovy is largely a super-set of Java so if you know Java, you basically
+know Groovy.  Learning of additional Groovy facilities can occur over
+time.
+</li><li> Groovy offers a small number of conveniences over Java.
+</li></ol>
+
+<p>Having said all this, however, all three languages are fully supported
+and there are no known bugs in any of the supported languages.
+</p>
+</div>
+<div class="subsection-level-extent" id="Types-of-Microservices">
+<h4 class="subsection"><span>6.2.2 Types of Microservices<a class="copiable-link" href="#Types-of-Microservices"> &para;</a></span></h4>
+
+<p>There are two types of microservices as follows:
+</p>
+<ol class="enumerate">
+<li> Remote (REST) Services
+</li><li> Local Services
+</li></ol>
+
+<p>Remote services are generally called by a (likely JavaScript)
+front-end or a remote client typically over <em class="emph">HTTP</em> or
+<em class="emph">HTTPS</em>.  Local services are services that are called locally,
+from within the system as, for example, one microservice calling a
+method in a different microservice.
+</p>
+</div>
+<div class="subsection-level-extent" id="Remote-Microservices">
+<h4 class="subsection"><span>6.2.3 Remote Microservices<a class="copiable-link" href="#Remote-Microservices"> &para;</a></span></h4>
+
+<p>In <em class="emph">Kiss</em>, remote microservices appear to the outside world as
+typical <em class="emph">REST</em> services.  They may be called by a
+<em class="emph">JavaScript</em> front-end, web service client, or any other facility
+that can talk to <em class="emph">REST</em> services.
+</p>
+<p><em class="emph">Kiss</em> <em class="emph">REST</em> services are asynchronous <em class="emph">HTTP</em> or
+<em class="emph">HTTPS</em> services.  Internally they are processed utilizing a
+thread pool to assure optimal CPU utilization.  The number of threads
+in the thread pool is controlled by a configuration parameter given in
+the <code class="code">application.ini</code> file.
+</p>
+<p><em class="emph">Kiss</em> comes with <em class="emph">JavaScript</em> code so that <code class="code">Kiss</code>
+<code class="code">REST</code> services can be easily accessed from a typical front-end.
+This code resides in a single file and can and has been used by
+alternative front-ends such as <em class="emph">Angular</em> and <code class="code">React</code>.
+</p>
+<p>There is no need to handle authentication.  <em class="emph">Kiss</em> handles that
+automatically.  So, when your web method is called, you know who
+they are and that they have been authenticated.
+</p>
+</div>
+<div class="subsection-level-extent" id="Defining-Remote-Services">
+<h4 class="subsection"><span>6.2.4 Defining Remote Services<a class="copiable-link" href="#Defining-Remote-Services"> &para;</a></span></h4>
+
+<p>Remote REST microservices typically reside under the
+<code class="code">backend/services</code> directory.  You can organize them any way you
+like.  A microservice is equivalent to a class.  The class name is the
+microservice name.  The methods in that class that have a certain
+signature (a particular set of arguments) are the web methods.
+</p>
+<p>A REST web microservice has the following signature:
+</p>
+<div class="example">
+<pre class="example-preformatted">void myMethod(JSONObject injson, 
+              JSONObject outjson, 
+              Connection db, 
+              ProcessServlet servlet) {
+...
+}
+</pre></div>
+
+<dl class="table">
+<dt>&lsquo;<samp class="samp">injson</samp>&rsquo;</dt>
+<dd><p>This is a <code class="code">JSON</code> object that contains all of the arguments passed
+in from the front-end.
+</p></dd>
+<dt>&lsquo;<samp class="samp">outjson</samp>&rsquo;</dt>
+<dd><p>This is a <code class="code">JSON</code> object that will contain all of the results
+sent back to the front-end.  Whatever is put in this object gets sent back to the front-end.
+</p></dd>
+<dt>&lsquo;<samp class="samp">db</samp>&rsquo;</dt>
+<dd><p>This is a database connection that can be used to access the SQL database.  The
+connection is unique and independent of all other services.
+</p></dd>
+<dt>&lsquo;<samp class="samp">servlet</samp>&rsquo;</dt>
+<dd><p>This object provides access to various system facilities uniquely related
+to this call.
+</p></dd>
+</dl>
+
+<p>See <a class="xref" href="#json">JSON</a> and the <code class="code">JavaDoc</code> for additional information.
+</p>
+
+</div>
+<div class="subsection-level-extent" id="Local-Microservices">
+<h4 class="subsection"><span>6.2.5 Local Microservices<a class="copiable-link" href="#Local-Microservices"> &para;</a></span></h4>
+
+<p>Local microservices are simply regular classes.  They typically reside
+in the <code class="code">backend/services</code> directory organized any way you like.
+Although methods within a particular microservice/class can call each
+other in the normal way, there is an extra step required for one
+microservice to call a method in a different microservice.  One of the
+reasons for this is so the system can be certain the latest version of
+the service is loaded and that it is fully compiled before you attempt
+to use it.
+</p>
+<p>In Groovy, a method in one class/microservice can call a method
+in a different class/microservice via the following methods.
+</p>
+<ul class="itemize mark-bullet">
+<li>GroovyService.run
+</li><li>GroovyService.getMethod
+</li></ul>
+
+<p>See the <em class="emph">Javadoc</em>.
+</p>
+</div>
+<div class="subsection-level-extent" id="Exceptions">
+<h4 class="subsection"><span>6.2.6 Exceptions<a class="copiable-link" href="#Exceptions"> &para;</a></span></h4>
+
+<p><em class="emph">Kiss</em> defines three exception classes named
+<code class="code">UserException</code>, <code class="code">LogException</code> and <code class="code">ServerException</code>.
+These exceptions are designed to be thrown from within your web
+services.
+</p>
+<p><code class="code">UserException</code> is used to abort the web service due to some sort
+of user error.  An error message and possible error code are
+returned to the front-end.  The front-end displays the error message
+in a popup and tells the web front-end that the web service failed by
+returning <code class="code">_Success = false</code>.  Nothing is logged on the back-end.
+This was not an error in the back-end.  It is good for notices to the user that
+something was wrong with their data.
+</p>
+<p><code class="code">LogException</code> is like <code class="code">UserException</code> except that it additionally leaves the message on the back-end log.  This is useful
+for debugging purposes.
+</p>
+<p><code class="code">ServerException</code> is like <code class="code">UserException</code> except that it additionally leaves a message and stack trace on the back-end log.  This is useful
+for debugging purposes.
+</p>
+<a class="anchor" id="json"></a></div>
+</div>
+<div class="section-level-extent" id="JSON">
+<h3 class="section"><span>6.3 JSON<a class="copiable-link" href="#JSON"> &para;</a></span></h3>
+
+<p>The first two arguments to all REST methods are <code class="code">injson</code> and
+<code class="code">outjson</code>.  <code class="code">injson</code> is a <code class="code">JSONObject</code> that contains
+the data passed in <em class="emph">from</em> the front-end.  <code class="code">outjson</code> is a
+pre-initialized, empty <code class="code">JSONObject</code> that will be <em class="emph">returned
+to</em> the front-end.  The REST service should read the data passed in
+from <code class="code">injson</code>, perform any needed processes, and put the result
+into <code class="code">outjson</code> to be returned to the front-end.
+</p>
+<p>The two main data types are <code class="code">JSONObject</code> and <code class="code">JSONArray</code>.
+Common methods include <code class="code">getString()</code>, <code class="code">getInt()</code>,
+<code class="code">getBoolean()</code>, <code class="code">getDouble()</code>, <code class="code">getJSONArray()</code>,
+<code class="code">has()</code>, and <code class="code">put()</code>.  See the JavaDocs for the complete API.
+</p>
+</div>
+<div class="section-level-extent" id="Large-Language-Models">
+<h3 class="section"><span>6.4 Large Language Models<a class="copiable-link" href="#Large-Language-Models"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> provides a high-level interface to the <em class="emph">Ollama</em> large language model (LLM), the <em class="emph">OpenAI</em> (chatGPT) server, and the <em class="emph">Anthropic</em> (Claude) server. This makes it easy for you to add LLM features to your application.
+</p>
+<ul class="mini-toc">
+<li><a href="#Ollama" accesskey="1">Ollama</a></li>
+<li><a href="#OpenAI-_0028chatGPT_0029" accesskey="2">OpenAI (chatGPT)</a></li>
+<li><a href="#Anthropic-_0028Claude_0029" accesskey="3">Anthropic (Claude)</a></li>
+</ul>
+<div class="subsection-level-extent" id="Ollama">
+<h4 class="subsection"><span>6.4.1 Ollama<a class="copiable-link" href="#Ollama"> &para;</a></span></h4>
+
+<p>Before this can function, however, you must have access to an <em class="emph">Ollama</em> server, either running on your local machine or a remote machine.
+</p>
+<ul class="itemize mark-bullet">
+<li>See <a class="uref" href="https://ollama.com">https://ollama.com</a> for information about installing the <em class="emph">Ollama</em> server.
+</li><li>The <em class="emph">Kiss</em> class <code class="code">org.kissweb.llm.Ollama</code> implements the interface.
+</li><li><em class="emph">Kiss</em> comes with a complete demo of this functionality.
+</li></ul>
+
+</div>
+<div class="subsection-level-extent" id="OpenAI-_0028chatGPT_0029">
+<h4 class="subsection"><span>6.4.2 OpenAI (chatGPT)<a class="copiable-link" href="#OpenAI-_0028chatGPT_0029"> &para;</a></span></h4>
+
+<p>Unlike the <em class="emph">Ollama</em> server, which runs locally, the <em class="emph">chatGPT</em>
+server runs on the cloud-based <em class="emph">OpenAI</em> server.  In order to use
+this server, you must have an account with them.  Once you get an
+account, you will need an API Key to interface with their server.
+Once you have this API Key, you may query <em class="emph">chatGPT</em>.
+</p>
+<p>The single <em class="emph">KISS</em> class that interfaces with <em class="emph">OpenAI</em> is
+named <em class="emph">OpenAI</em>.  
+</p>
+<p>Typical usage would look as follows:
+</p>
+<div class="example">
+<pre class="example-preformatted">    String apiKey = &quot;xxxxxxxxxxxxxxx&quot;;
+    OpenAI chatGPT = new OpenAI(apiKey, &quot;gpt-3.5-turbo&quot;)
+    String result = chatGPT.send(&quot;Who is president Bush?&quot;)
+</pre></div>
+
+<p>The static method <code class="code">setUrl(String url)</code> can be used to override the
+default OpenAI endpoint URL.  This is useful for proxies, gateways, or
+OpenAI-compatible endpoints.  Since it is a global setting, changing the
+URL affects all instances.
+</p>
+<p>See that class for documentation.
+</p>
+</div>
+<div class="subsection-level-extent" id="Anthropic-_0028Claude_0029">
+<h4 class="subsection"><span>6.4.3 Anthropic (Claude)<a class="copiable-link" href="#Anthropic-_0028Claude_0029"> &para;</a></span></h4>
+
+<p>Like <em class="emph">OpenAI</em>, the <em class="emph">Anthropic</em> server runs in the cloud.
+In order to use it, you must have an account with Anthropic.
+Once you get an account, you will need an API Key to interface with their server.
+Once you have this API Key, you may query <em class="emph">Claude</em>.
+</p>
+<p>The single <em class="emph">KISS</em> class that interfaces with <em class="emph">Anthropic</em> is
+named <em class="emph">Anthropic</em>.
+</p>
+<p>Typical usage would look as follows:
+</p>
+<div class="example">
+<pre class="example-preformatted">    String apiKey = &quot;xxxxxxxxxxxxxxx&quot;;
+    Anthropic claude = new Anthropic(apiKey, &quot;claude-sonnet-4-20250514&quot;);
+    String result = claude.send(&quot;Who is president Bush?&quot;);
+</pre></div>
+
+<p>The class also supports streaming responses and image inputs.
+</p>
+<p>The static method <code class="code">setUrl(String url)</code> can be used to override the
+default Anthropic endpoint URL.  This is useful for proxies, gateways, or
+Anthropic-compatible endpoints.  The static method
+<code class="code">setVersion(String version)</code> can be used to override the
+<code class="code">anthropic-version</code> request header value (e.g., <code class="code">2023-06-01</code>).
+Both are global settings that affect all instances.
+</p>
+<p>See that class for documentation.
+</p>
+</div>
+</div>
+<div class="section-level-extent" id="Utilities-1">
+<h3 class="section"><span>6.5 Utilities<a class="copiable-link" href="#Utilities-1"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> includes an ever-growing set of utilities to help deal with common tasks.
+These utilities are located under the <code class="code">src/main/core/org/kissweb</code> directory and have names such as
+<code class="code">DateTime.java</code>, <code class="code">NumberFormat</code>, etc.  These utilities
+are documented in the JavaDocs.
+</p>
+</div>
+<div class="section-level-extent" id="Global-Logout-Handler">
+<h3 class="section"><span>6.6 Global Logout Handler<a class="copiable-link" href="#Global-Logout-Handler"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> provides a mechanism to execute custom code whenever a user
+logs out (manually or due to inactivity timeout).  The handler is
+configured in <code class="code">KissInit.groovy</code> using
+<code class="code">UserCache.setLogoutHandler()</code>, which accepts a
+<code class="code">Consumer&lt;UserData&gt;</code>.
+</p>
+<p>A basic example:
+</p>
+<div class="example">
+<pre class="example-preformatted">UserCache.setLogoutHandler({ UserData ud -&gt;
+    println &quot;User ${ud.getUsername()} is logging out&quot;
+} as Consumer&lt;UserData&gt;)
+</pre></div>
+
+<p>The <code class="code">UserData</code> object provides methods such as
+<code class="code">getUsername()</code>, <code class="code">getUserId()</code>, <code class="code">getUuid()</code>, and
+<code class="code">getUserData(String key)</code>.  If you need database access in the
+handler, open a new connection with
+<code class="code">MainServlet.openNewConnection()</code> and close it in a
+<code class="code">finally</code> block.
+</p>
+<p>To log out from the front-end, call <code class="code">Server.logout()</code>.
+</p>
+<p>For detailed examples and usage patterns, see the <em class="emph">Kiss</em> book and
+the JavaDocs.
+</p>
+
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="SQL-Query-Generator.html">SQL Query Generator</a>, Previous: <a href="Front_002dend-API.html">Front-end API</a>, Up: <a href="index.html">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

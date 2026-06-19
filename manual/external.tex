@@ -1,0 +1,100 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 2026 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+@node External Integrations
+
+@html
+@include style.css
+@end html
+
+@chapter External Integrations
+
+@emph{Kiss} ships with built-in support for connecting your application
+to systems beyond itself --- both calling external services and being
+called by them --- as well as integrating with modern AI tooling.  This
+chapter notes that these facilities exist; full details, including
+class names, configuration, and worked examples, are in the @emph{Kiss}
+book.
+
+@section Integrating With External Systems
+
+@itemize @bullet
+@item @emph{REST Client} --- make HTTP calls out to third-party APIs.
+@item @emph{REST Server} --- accept inbound HTTP calls from external
+systems and webhooks for clients that do not speak the @emph{Kiss}
+JSON-RPC protocol.
+@end itemize
+
+@section LLM Integration
+
+@itemize @bullet
+@item @emph{LLM Providers} --- built-in support for OpenAI, Anthropic,
+and Ollama.
+@item @emph{MCP Server} --- expose application tools to AI assistants
+via the Model Context Protocol.
+@item @emph{MCP Client} --- consume tools from a remote MCP server,
+with optional OAuth 2.1 authentication.
+@item @emph{Embeddings Database} --- vector storage for
+retrieval-augmented generation (RAG).
+@end itemize
+
+@section Security
+
+@itemize @bullet
+@item @emph{OAuth 2.1 Resource Server} --- validate bearer tokens
+issued either by this same Kiss app acting as the authorization server
+(see the next bullet) or by an external provider such as Auth0, Okta,
+Keycloak, Microsoft Entra, or Google.  When configured,
+@code{MCPServerBase} subclasses automatically require valid tokens; no
+code change is needed.  Configuration lives in
+@code{application.ini}; the discovery document is published at
+@code{/.well-known/oauth-protected-resource}.
+@item @emph{OAuth 2.1 Authorization Server} --- issue tokens directly
+from Kiss: authorization-code flow with mandatory PKCE, token endpoint
+with refresh-token rotation, dynamic client registration (RFC 7591),
+and the RFC 8414 metadata and JWKS endpoints.  Persists clients,
+refresh tokens, and signing keys to a private SQLite database that is
+independent of the application's main database --- no shared schema,
+no operator setup beyond pointing at a file path.  Enabled by a single
+@code{application.ini} key.
+@item @emph{OAuth 2.1 Client} --- obtain tokens from a @emph{remote}
+OAuth 2.1 server and present them on outbound calls.  Kiss drives the
+authorization-code + PKCE flow with automatic discovery (RFC 9728 ->
+RFC 8414 / OpenID Connect) and dynamic client registration when no
+@code{ClientId} is configured, captures the redirect at a built-in
+callback servlet, and refreshes access tokens automatically.  Multiple
+remote providers are supported, each declared in its own
+@code{[OAuthClient @var{name}]} section of @code{application.ini}.
+Cached registrations and tokens are stored in the same @code{oauth.db}
+the authorization server uses.
+@end itemize
+
+Each of the three roles is inert until configured and runs
+independently or together.  See @code{OAuth.md} at the repository root
+for the full how-to on all three, and the @emph{Kiss} book for the
+in-depth treatment.

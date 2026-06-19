@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Query Generator (Getting Started)</title>
+
+<meta name="description" content="SQL Query Generator (Getting Started)">
+<meta name="keywords" content="SQL Query Generator (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Command-Line-Utility.html" rel="next" title="Command Line Utility">
+<link href="Back_002dend-API.html" rel="prev" title="Back-end API">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter-level-extent" id="SQL-Query-Generator">
+<div class="nav-panel">
+<p>
+Next: <a href="Command-Line-Utility.html" accesskey="n" rel="next">Command Line Utility</a>, Previous: <a href="Back_002dend-API.html" accesskey="p" rel="prev">Back-end API</a>, Up: <a href="index.html" accesskey="u" rel="up">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+<h2 class="chapter" id="SQL-Query-Generator-1"><span>7 SQL Query Generator<a class="copiable-link" href="#SQL-Query-Generator-1"> &para;</a></span></h2>
+
+<p>In systems with many interrelated SQL tables, writing queries with the
+correct joins is complex and error-prone.  Developers must manually
+trace foreign key relationships, determine join paths, and construct
+multi-table queries &mdash; work that the schema itself already encodes.
+</p>
+<p><em class="emph">Kiss</em> provides an automatic SQL query generator that solves this
+problem.  The developer specifies what columns to select, what
+conditions to apply, and how to order the results.  The system
+determines the join path automatically and produces the correct SQL.
+</p>
+<p>All classes are in the <code class="code">org.kissweb.database</code> package:
+</p>
+<dl class="table">
+<dt><code class="code">SchemaGraph</code></dt>
+<dd><p>Models the database schema as a graph where tables are nodes and
+foreign key relationships are edges.  Finds the shortest join path
+between tables using BFS (breadth-first search).
+</p></dd>
+<dt><code class="code">QueryBuilder</code></dt>
+<dd><p>Fluent API to specify SELECT, WHERE, ORDER BY, GROUP BY, HAVING, and
+explicit joins.  Uses a <code class="code">SchemaGraph</code> to automatically determine the
+required joins and produce the final SQL.
+</p></dd>
+<dt><code class="code">SchemaGraph.Edge</code></dt>
+<dd><p>Represents a single or composite foreign key relationship between two
+tables.
+</p></dd>
+</dl>
+
+<ul class="mini-toc">
+<li><a href="#Quick-Start" accesskey="1">Quick Start</a></li>
+<li><a href="#Further-Information" accesskey="2">Further Information</a></li>
+<li><a href="#Source-Files" accesskey="3">Source Files</a></li>
+</ul>
+<div class="section-level-extent" id="Quick-Start">
+<h3 class="section"><span>7.1 Quick Start<a class="copiable-link" href="#Quick-Start"> &para;</a></span></h3>
+
+<ul class="mini-toc">
+<li><a href="#Building-the-Schema-Graph" accesskey="1">Building the Schema Graph</a></li>
+<li><a href="#Building-and-Executing-a-Query" accesskey="2">Building and Executing a Query</a></li>
+</ul>
+<div class="subsection-level-extent" id="Building-the-Schema-Graph">
+<h4 class="subsection"><span>7.1.1 Building the Schema Graph<a class="copiable-link" href="#Building-the-Schema-Graph"> &para;</a></span></h4>
+
+<p>The schema graph must be built once at application startup.  There
+are several ways to create it.
+</p>
+<ul class="mini-toc">
+<li><a href="#From-Live-Database-Metadata" accesskey="1">From Live Database Metadata</a></li>
+<li><a href="#Programmatic-Declaration" accesskey="2">Programmatic Declaration</a></li>
+<li><a href="#Hybrid" accesskey="3">Hybrid</a></li>
+<li><a href="#Cached-per-Schema-_0028Thread_002dSafe_0029" accesskey="4">Cached per Schema (Thread-Safe)</a></li>
+<li><a href="#Cached-_0028for-Fast-Startup_0029" accesskey="5">Cached (for Fast Startup)</a></li>
+</ul>
+<div class="subsubsection-level-extent" id="From-Live-Database-Metadata">
+<h4 class="subsubsection"><span>7.1.1.1 From Live Database Metadata<a class="copiable-link" href="#From-Live-Database-Metadata"> &para;</a></span></h4>
+
+<div class="example">
+<pre class="example-preformatted">SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+</pre></div>
+
+<p>This reads JDBC <code class="code">DatabaseMetaData</code> for all tables and their foreign
+keys.  Composite (multi-column) foreign keys are automatically grouped
+by constraint name.  Works on all five supported databases (PostgreSQL,
+MySQL, SQLite, SQL Server, Oracle).
+</p>
+</div>
+<div class="subsubsection-level-extent" id="Programmatic-Declaration">
+<h4 class="subsubsection"><span>7.1.1.2 Programmatic Declaration<a class="copiable-link" href="#Programmatic-Declaration"> &para;</a></span></h4>
+
+<div class="example">
+<pre class="example-preformatted">SchemaGraph graph = new SchemaGraph();
+graph.addForeignKey(&quot;employee&quot;, &quot;department_id&quot;,
+                    &quot;department&quot;, &quot;department_id&quot;);
+graph.addForeignKey(&quot;order_line&quot;,
+    new String[]{&quot;order_id&quot;, &quot;product_id&quot;},
+    &quot;order_product&quot;,
+    new String[]{&quot;order_id&quot;, &quot;product_id&quot;});
+</pre></div>
+
+</div>
+<div class="subsubsection-level-extent" id="Hybrid">
+<h4 class="subsubsection"><span>7.1.1.3 Hybrid<a class="copiable-link" href="#Hybrid"> &para;</a></span></h4>
+
+<div class="example">
+<pre class="example-preformatted">SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+graph.addForeignKey(&quot;audit_log&quot;, &quot;user_id&quot;,
+                    &quot;employee&quot;, &quot;employee_id&quot;);
+</pre></div>
+
+</div>
+<div class="subsubsection-level-extent" id="Cached-per-Schema-_0028Thread_002dSafe_0029">
+<h4 class="subsubsection"><span>7.1.1.4 Cached per Schema (Thread-Safe)<a class="copiable-link" href="#Cached-per-Schema-_0028Thread_002dSafe_0029"> &para;</a></span></h4>
+
+<div class="example">
+<pre class="example-preformatted">// First call builds from the database and caches
+SchemaGraph graph = SchemaGraph.fromDatabase(conn, &quot;mySchema&quot;);
+
+// Subsequent calls return the cached instance immediately
+SchemaGraph graph = SchemaGraph.fromDatabase(conn, &quot;mySchema&quot;);
+
+// Clear cache if schema changes
+SchemaGraph.clearSchemaCache(&quot;mySchema&quot;);  // one entry
+SchemaGraph.clearSchemaCache();            // all entries
+</pre></div>
+
+</div>
+<div class="subsubsection-level-extent" id="Cached-_0028for-Fast-Startup_0029">
+<h4 class="subsubsection"><span>7.1.1.5 Cached (for Fast Startup)<a class="copiable-link" href="#Cached-_0028for-Fast-Startup_0029"> &para;</a></span></h4>
+
+<div class="example">
+<pre class="example-preformatted">// First run: read from database, save cache
+SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+graph.saveToFile(&quot;schema-cache.txt&quot;);
+
+// Subsequent runs: load from cache (sub-millisecond)
+SchemaGraph graph = SchemaGraph.loadFromFile(&quot;schema-cache.txt&quot;);
+</pre></div>
+
+</div>
+</div>
+<div class="subsection-level-extent" id="Building-and-Executing-a-Query">
+<h4 class="subsection"><span>7.1.2 Building and Executing a Query<a class="copiable-link" href="#Building-and-Executing-a-Query"> &para;</a></span></h4>
+
+<p>The simplest approach is to create a <code class="code">QueryBuilder</code> directly from
+a <code class="code">Connection</code>.  The connection&rsquo;s schema graph is used automatically,
+and the no-argument <code class="code">fetchAll()</code>, <code class="code">fetchOne()</code>, and
+<code class="code">fetchAllJSON()</code> methods execute against that connection:
+</p>
+<div class="example">
+<pre class="example-preformatted">List&lt;Record&gt; records = conn.newQueryBuilder()
+    .select(&quot;employee.first_name&quot;, &quot;employee.last_name&quot;)
+    .select(&quot;department.name AS dept_name&quot;)
+    .select(&quot;building.address&quot;)
+    .where(&quot;project.project_id = ?&quot;, projectId)
+    .where(&quot;employee.active = 'Y'&quot;)
+    .orderBy(&quot;employee.last_name&quot;)
+    .orderBy(&quot;employee.first_name&quot;)
+    .fetchAll();
+
+for (Record r : records) {
+    String name = r.getString(&quot;first_name&quot;);
+    String dept = r.getString(&quot;dept_name&quot;);
+}
+</pre></div>
+
+<p>Alternatively, a <code class="code">QueryBuilder</code> can be created with an explicit
+<code class="code">SchemaGraph</code> and a connection passed to the execute methods:
+</p>
+<div class="example">
+<pre class="example-preformatted">List&lt;Record&gt; records = new QueryBuilder(graph)
+    .select(&quot;employee.first_name&quot;, &quot;employee.last_name&quot;)
+    .select(&quot;department.name AS dept_name&quot;)
+    .select(&quot;building.address&quot;)
+    .where(&quot;project.project_id = ?&quot;, projectId)
+    .where(&quot;employee.active = 'Y'&quot;)
+    .orderBy(&quot;employee.last_name&quot;)
+    .orderBy(&quot;employee.first_name&quot;)
+    .fetchAll(conn);
+
+for (Record r : records) {
+    String name = r.getString(&quot;first_name&quot;);
+    String dept = r.getString(&quot;dept_name&quot;);
+}
+</pre></div>
+
+<p>The system automatically generates SQL such as:
+</p>
+<div class="example">
+<pre class="example-preformatted">SELECT employee.first_name, employee.last_name,
+       department.name AS dept_name, building.address
+FROM project
+JOIN project_assignment
+  ON project_assignment.project_id = project.project_id
+JOIN employee
+  ON project_assignment.employee_id = employee.employee_id
+JOIN department
+  ON employee.department_id = department.department_id
+JOIN building
+  ON department.building_id = building.building_id
+WHERE project.project_id = ?
+  AND employee.active = 'Y'
+ORDER BY employee.last_name, employee.first_name
+</pre></div>
+
+</div>
+</div>
+<div class="section-level-extent" id="Further-Information">
+<h3 class="section"><span>7.2 Further Information<a class="copiable-link" href="#Further-Information"> &para;</a></span></h3>
+
+<p>The <code class="code">QueryBuilder</code> API includes many additional features not
+covered in this overview, including:
+</p>
+<ul class="itemize mark-bullet">
+<li>OR / AND condition grouping (<code class="code">startOr()</code>, <code class="code">endOr()</code>, <code class="code">startAnd()</code>, <code class="code">endAnd()</code>)
+</li><li>Subqueries in WHERE (<code class="code">whereIn()</code>, <code class="code">whereNotIn()</code>, <code class="code">whereExists()</code>, <code class="code">whereNotExists()</code>)
+</li><li>Explicit joins for self-joins and controlling join paths (<code class="code">join()</code>, <code class="code">leftJoin()</code>, <code class="code">rightJoin()</code>)
+</li><li>Aggregate helpers (<code class="code">selectCount()</code>, <code class="code">selectSum()</code>, <code class="code">selectAvg()</code>, <code class="code">selectMin()</code>, <code class="code">selectMax()</code>)
+</li><li>GROUP BY / HAVING
+</li><li>Common Table Expressions (CTEs) via <code class="code">with()</code>
+</li><li>UNION / UNION ALL
+</li><li>LIMIT
+</li><li>DISTINCT
+</li></ul>
+
+<p>For the complete API reference, detailed examples, and edge case
+documentation, see the <em class="emph">Kiss</em> book and the JavaDocs.
+(See <a class="xref" href="Orientation.html#javadoc">Creating JavaDocs</a>.)
+</p>
+</div>
+<div class="section-level-extent" id="Source-Files">
+<h3 class="section"><span>7.3 Source Files<a class="copiable-link" href="#Source-Files"> &para;</a></span></h3>
+
+<dl class="table">
+<dt><code class="code">src/main/core/org/kissweb/database/SchemaGraph.java</code></dt>
+<dd><p>Schema graph model: table/edge management, BFS path finding, schema
+caching.
+</p></dd>
+<dt><code class="code">src/main/core/org/kissweb/database/QueryBuilder.java</code></dt>
+<dd><p>Fluent query builder: SELECT, WHERE, ORDER BY, GROUP BY, HAVING,
+explicit joins, aggregate helpers, build, and execute methods.
+</p></dd>
+<dt><code class="code">src/test/core/org/kissweb/database/QueryBuilderTest.java</code></dt>
+<dd><p>108 unit tests covering all functionality.
+</p></dd>
+</dl>
+
+
+
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Command-Line-Utility.html">Command Line Utility</a>, Previous: <a href="Back_002dend-API.html">Back-end API</a>, Up: <a href="index.html">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

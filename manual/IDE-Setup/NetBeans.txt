@@ -1,0 +1,58 @@
+
+NetBeans
+
+NetBeans is the most intuitive and easy to use IDE.  As of version 15,
+while it does work, it is incapable of debugging code that is changed
+while the system is running (a key aspect of Kiss).
+
+The file "pom.xml" is only used to describe dependencies to GitHub.
+Kiss is not a Maven project.  Unfortunately, most IDE's see the pom.xml
+file and assume a Maven project.  For this reason, the pom.xml usually
+needs to be deleted before engaging an IDE.
+
+----------------------------------------------------------------------
+
+12.6-rc1
+
+rm pom.xml
+./bld all
+Go into NetBeans
+Tools / Plugins / Installed
+	Select and activate HTML5, Java SE, Tools, Groovy, Java Web and EE
+Tools / Servers
+	Add Server
+	Tomcat
+	Server Location:  .../tomcat
+	Catalina Base:  (blank)
+	Username: admin
+	Password: admin
+	
+File / New Project
+	Java with Ant / Java Web / Web Application with Existing Sources
+	Name and Location
+		Location:  (root of your app)
+		(Remaining defaults are fine) Next
+	Server Settings
+		Server:  choose the tomcat that comes with Kiss
+		Context Path:  /
+	Existing Sources and Libraries
+		Web Page Folder:  .../src/main/frontend
+		WEB-INF Content:  .../tomcat/conf
+		Libraries Folder:  .../libs
+	Source Package Folders:
+		src/main/backend
+		src/main/core
+		builder
+
+Right-click project root / Properties / Sources
+	Source/Binary Format:  JDK 8
+	
+
+After this configuration is performed, you can use the IDE’s native
+build and debug processes for development. However, bld should still
+be used to produce the production WAR file.
+
+In order to enable the ability to put breakpoints in a Groovy file,
+you must first bring a Java file up in the editor.  This enables
+debugging ability for Java and Groovy.
+

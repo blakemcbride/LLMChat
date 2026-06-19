@@ -1,0 +1,236 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 2018 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+@node SQL Query Generator
+
+@html
+@include style.css
+@end html
+
+@chapter SQL Query Generator
+
+In systems with many interrelated SQL tables, writing queries with the
+correct joins is complex and error-prone.  Developers must manually
+trace foreign key relationships, determine join paths, and construct
+multi-table queries --- work that the schema itself already encodes.
+
+@emph{Kiss} provides an automatic SQL query generator that solves this
+problem.  The developer specifies what columns to select, what
+conditions to apply, and how to order the results.  The system
+determines the join path automatically and produces the correct SQL.
+
+All classes are in the @code{org.kissweb.database} package:
+
+@table @code
+@item SchemaGraph
+Models the database schema as a graph where tables are nodes and
+foreign key relationships are edges.  Finds the shortest join path
+between tables using BFS (breadth-first search).
+@item QueryBuilder
+Fluent API to specify SELECT, WHERE, ORDER BY, GROUP BY, HAVING, and
+explicit joins.  Uses a @code{SchemaGraph} to automatically determine the
+required joins and produce the final SQL.
+@item SchemaGraph.Edge
+Represents a single or composite foreign key relationship between two
+tables.
+@end table
+
+@section Quick Start
+
+@subsection Building the Schema Graph
+
+The schema graph must be built once at application startup.  There
+are several ways to create it.
+
+@subsubsection From Live Database Metadata
+
+@example
+SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+@end example
+
+@noindent
+This reads JDBC @code{DatabaseMetaData} for all tables and their foreign
+keys.  Composite (multi-column) foreign keys are automatically grouped
+by constraint name.  Works on all five supported databases (PostgreSQL,
+MySQL, SQLite, SQL Server, Oracle).
+
+@subsubsection Programmatic Declaration
+
+@example
+SchemaGraph graph = new SchemaGraph();
+graph.addForeignKey("employee", "department_id",
+                    "department", "department_id");
+graph.addForeignKey("order_line",
+    new String[]@{"order_id", "product_id"@},
+    "order_product",
+    new String[]@{"order_id", "product_id"@});
+@end example
+
+@subsubsection Hybrid
+
+@example
+SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+graph.addForeignKey("audit_log", "user_id",
+                    "employee", "employee_id");
+@end example
+
+@subsubsection Cached per Schema (Thread-Safe)
+
+@example
+// First call builds from the database and caches
+SchemaGraph graph = SchemaGraph.fromDatabase(conn, "mySchema");
+
+// Subsequent calls return the cached instance immediately
+SchemaGraph graph = SchemaGraph.fromDatabase(conn, "mySchema");
+
+// Clear cache if schema changes
+SchemaGraph.clearSchemaCache("mySchema");  // one entry
+SchemaGraph.clearSchemaCache();            // all entries
+@end example
+
+@subsubsection Cached (for Fast Startup)
+
+@example
+// First run: read from database, save cache
+SchemaGraph graph = SchemaGraph.fromDatabase(conn);
+graph.saveToFile("schema-cache.txt");
+
+// Subsequent runs: load from cache (sub-millisecond)
+SchemaGraph graph = SchemaGraph.loadFromFile("schema-cache.txt");
+@end example
+
+@subsection Building and Executing a Query
+
+The simplest approach is to create a @code{QueryBuilder} directly from
+a @code{Connection}.  The connection's schema graph is used automatically,
+and the no-argument @code{fetchAll()}, @code{fetchOne()}, and
+@code{fetchAllJSON()} methods execute against that connection:
+
+@example
+List<Record> records = conn.newQueryBuilder()
+    .select("employee.first_name", "employee.last_name")
+    .select("department.name AS dept_name")
+    .select("building.address")
+    .where("project.project_id = ?", projectId)
+    .where("employee.active = 'Y'")
+    .orderBy("employee.last_name")
+    .orderBy("employee.first_name")
+    .fetchAll();
+
+for (Record r : records) @{
+    String name = r.getString("first_name");
+    String dept = r.getString("dept_name");
+@}
+@end example
+
+@noindent
+Alternatively, a @code{QueryBuilder} can be created with an explicit
+@code{SchemaGraph} and a connection passed to the execute methods:
+
+@example
+List<Record> records = new QueryBuilder(graph)
+    .select("employee.first_name", "employee.last_name")
+    .select("department.name AS dept_name")
+    .select("building.address")
+    .where("project.project_id = ?", projectId)
+    .where("employee.active = 'Y'")
+    .orderBy("employee.last_name")
+    .orderBy("employee.first_name")
+    .fetchAll(conn);
+
+for (Record r : records) @{
+    String name = r.getString("first_name");
+    String dept = r.getString("dept_name");
+@}
+@end example
+
+@noindent
+The system automatically generates SQL such as:
+
+@example
+SELECT employee.first_name, employee.last_name,
+       department.name AS dept_name, building.address
+FROM project
+JOIN project_assignment
+  ON project_assignment.project_id = project.project_id
+JOIN employee
+  ON project_assignment.employee_id = employee.employee_id
+JOIN department
+  ON employee.department_id = department.department_id
+JOIN building
+  ON department.building_id = building.building_id
+WHERE project.project_id = ?
+  AND employee.active = 'Y'
+ORDER BY employee.last_name, employee.first_name
+@end example
+
+@section Further Information
+
+The @code{QueryBuilder} API includes many additional features not
+covered in this overview, including:
+
+@itemize @bullet
+@item
+OR / AND condition grouping (@code{startOr()}, @code{endOr()}, @code{startAnd()}, @code{endAnd()})
+@item
+Subqueries in WHERE (@code{whereIn()}, @code{whereNotIn()}, @code{whereExists()}, @code{whereNotExists()})
+@item
+Explicit joins for self-joins and controlling join paths (@code{join()}, @code{leftJoin()}, @code{rightJoin()})
+@item
+Aggregate helpers (@code{selectCount()}, @code{selectSum()}, @code{selectAvg()}, @code{selectMin()}, @code{selectMax()})
+@item
+GROUP BY / HAVING
+@item
+Common Table Expressions (CTEs) via @code{with()}
+@item
+UNION / UNION ALL
+@item
+LIMIT
+@item
+DISTINCT
+@end itemize
+
+For the complete API reference, detailed examples, and edge case
+documentation, see the @emph{Kiss} book and the JavaDocs.
+(@xref{javadoc,,Creating JavaDocs}.)
+
+@section Source Files
+
+@table @code
+@item src/main/core/org/kissweb/database/SchemaGraph.java
+Schema graph model: table/edge management, BFS path finding, schema
+caching.
+@item src/main/core/org/kissweb/database/QueryBuilder.java
+Fluent query builder: SELECT, WHERE, ORDER BY, GROUP BY, HAVING,
+explicit joins, aggregate helpers, build, and execute methods.
+@item src/test/core/org/kissweb/database/QueryBuilderTest.java
+108 unit tests covering all functionality.
+@end table
+
+@c The full SchemaGraph and QueryBuilder API reference has been moved
+@c to the Kiss book.  The JavaDocs also contain the complete API.

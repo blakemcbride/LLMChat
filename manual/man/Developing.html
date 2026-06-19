@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Developing (Getting Started)</title>
+
+<meta name="description" content="Developing (Getting Started)">
+<meta name="keywords" content="Developing (Getting Started)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Front_002dend-API.html" rel="next" title="Front-end API">
+<link href="Orientation.html" rel="prev" title="Orientation">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter-level-extent" id="Developing">
+<div class="nav-panel">
+<p>
+Next: <a href="Front_002dend-API.html" accesskey="n" rel="next">Front-end API</a>, Previous: <a href="Orientation.html" accesskey="p" rel="prev">Orientation</a>, Up: <a href="index.html" accesskey="u" rel="up">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+<h2 class="chapter" id="Developing-1"><span>4 Developing<a class="copiable-link" href="#Developing-1"> &para;</a></span></h2>
+
+<p>This section details the development process with <em class="emph">Kiss</em>.  The
+details provided will be for IntelliJ but can be adapted to other
+IDEs.  The use of an IDE is tremendously beneficial because of the
+graphical debugging and intelligent code completion capabilities.
+</p>
+<p>A typical development environment includes two separate web servers running
+on two different ports (all running on your single development machine).  One serves the back-end REST services, and
+the other serves the front-end HTML, JavaScript, and CSS files.  This
+arrangement allows both front-end and back-end development without any
+compiles, server reboots, file copies, or deployments.  Back-end and
+front-end files can be edited and saved.  Their changes take effect
+immediately.
+</p>
+<p>Of course, in a production environment, only a single web server would be
+utilized, and front-end and back-end changes take effect immediately
+there too.
+</p>
+<ul class="mini-toc">
+<li><a href="#Overview" accesskey="1">Overview</a></li>
+<li><a href="#Back_002dend-Development" accesskey="2">Back-end Development</a></li>
+<li><a href="#Front_002dend-Development-1" accesskey="3">Front-end Development</a></li>
+<li><a href="#Reports-And-Exports" accesskey="4">Reports And Exports</a></li>
+<li><a href="#Authentication" accesskey="5">Authentication</a></li>
+<li><a href="#The-Build-System" accesskey="6">The Build System</a></li>
+<li><a href="#Using-Artificial-Intelligence" accesskey="7">Using Artificial Intelligence</a></li>
+</ul>
+<div class="section-level-extent" id="Overview">
+<h3 class="section"><span>4.1 Overview<a class="copiable-link" href="#Overview"> &para;</a></span></h3>
+
+<p>The following details the normal steps to boot up a development environment.
+Once this environment is set up, it may remain active for the whole day.
+There is rarely any reason to re-build or re-boot the development environment.
+</p>
+<p>Note that all of the command-prompt commands are executed from the
+root of your application.
+</p>
+<ol class="enumerate">
+<li> In a command-prompt, type:  <code class="code">./view-log</code> (not needed on Windows)
+
+<p>This is where back-end messages appear. This command is not needed under Windows.
+</p></li><li> In a second command-prompt, type:  <code class="code">./bld develop</code> (<code class="code">bld develop</code> on Windows)
+
+<p>This builds the system and runs the back-end and front-end servers.
+</p></li><li> In the IDE, attach to the Java process at port 9000.
+
+<p>This will allow you to debug the back-end.
+</p></li><li> From your browser, go to <a class="uref" href="http://localhost:8000">http://localhost:8000</a>
+
+<p>This is where you view and interact with your application.
+</p></li><li> Open the <em class="emph">Developer tools</em> from within the browser.
+
+<p>This is where you debug the front-end.
+</p></li><li> Be sure to disable network caching on the browser. (Otherwise, changes you make to
+the front-end will not immediately appear in the browser.)
+</li></ol>
+
+<p>At this point, development, testing, and debugging can occur unabated.
+There should be no need to rebuild or bring anything down.
+</p>
+<p>Front-end changes will appear as soon as you re-load the page on your browser.
+Back-end changes will take effect immediately.
+</p>
+<ul class="mini-toc">
+<li><a href="#IDE" accesskey="1">IDE</a></li>
+</ul>
+<div class="subsection-level-extent" id="IDE">
+<h4 class="subsection"><span>4.1.1 IDE<a class="copiable-link" href="#IDE"> &para;</a></span></h4>
+
+<p>While development with <em class="emph">Kiss</em> does not require an IDE, most
+developers utilize an IDE (Integrated Development Environment).  
+<em class="emph">Kiss</em> includes an effort to assist with IDE integration
+(such as an <em class="emph">ant</em> interface to our build system).
+</p>
+<p>See the files under the <code class="code">manual/IDE-Setup</code> directory for further
+information.
+</p>
+</div>
+</div>
+<div class="section-level-extent" id="Back_002dend-Development">
+<h3 class="section"><span>4.2 Back-end Development<a class="copiable-link" href="#Back_002dend-Development"> &para;</a></span></h3>
+
+<p>The back-end works differently in development and production
+environments.  Although in both environments back-end and front-end
+changes take effect immediately, the setup of the production environment
+copies all files into the production environment, whereas in a
+development environment the source and production code are split.  In
+order to facilitate rapid and easy development, it is important that
+source files be used rather than the production copies during the
+development process.  
+</p>
+<p>The system automatically detects the location of the application
+source in most configurations.  However, this may be explicitly
+set via a system environment variable (<code class="code">KISS_ROOT</code>).  The
+value of this environment variable should be the absolute path of the
+root of the application source code.  The directory it indicates
+should have a sub-directory named <code class="code">src/main/backend</code>.
+</p>
+
+
+<ul class="mini-toc">
+<li><a href="#REST-Server" accesskey="1">REST Server</a></li>
+<li><a href="#Application-Code" accesskey="2">Application Code</a></li>
+<li><a href="#Cached-User-Data" accesskey="3">Cached User Data</a></li>
+<li><a href="#Programming-Languages" accesskey="4">Programming Languages</a></li>
+<li><a href="#Cron" accesskey="5">Cron</a></li>
+<li><a href="#CORS" accesskey="6">CORS</a></li>
+<li><a href="#Unit-Tests" accesskey="7">Unit Tests</a></li>
+</ul>
+<div class="subsection-level-extent" id="REST-Server">
+<h4 class="subsection"><span>4.2.1 REST Server<a class="copiable-link" href="#REST-Server"> &para;</a></span></h4>
+
+<p>There are two different methods of running the back-end REST server as
+follows.
+</p>
+<ul class="mini-toc">
+<li><a href="#IDE-1" accesskey="1">IDE</a></li>
+<li><a href="#BLD" accesskey="2">BLD</a></li>
+</ul>
+<div class="subsubsection-level-extent" id="IDE-1">
+<h4 class="subsubsection"><span>4.2.1.1 IDE<a class="copiable-link" href="#IDE-1"> &para;</a></span></h4>
+
+<p>Running the IDE back-end requires the following:
+</p>
+<ol class="enumerate">
+<li> The IDE is completely configured.
+</li><li> The system was built with the IDE.
+</li></ol>
+
+<p>Typically, the IDE manages a Tomcat instance and serves up the core
+back-end code serving the REST services.  That code detects that it is
+running under an IDE and re-routes all back-end application files back
+to the source directories.
+</p>
+<p>Although back-end files are edited in source form and run in compiled
+form, back-end code can be debugged (including breakpoints) as if
+it were compiled before the system was booted.
+</p>
+<p>Once the back-end server is up, application files changed under the
+<code class="code">src/main/backend</code> directory will take effect immediately.
+</p>
+</div>
+<div class="subsubsection-level-extent" id="BLD">
+<h4 class="subsubsection"><span>4.2.1.2 BLD<a class="copiable-link" href="#BLD"> &para;</a></span></h4>
+
+<p>Utilizing the included <em class="emph">Kiss build system (bld)</em>, the many steps required 
+to install and configure Tomcat and the IDE are unnecessary.  The whole process
+(for the back-end portion) can be done as follows:
+</p>
+<ol class="enumerate">
+<li> From any stage (including having just downloaded the <em class="emph">Kiss</em> system) type
+the following:  <code class="code">./bld develop</code>
+
+<p>Note:  Remember that all commands that start with <code class="code">./</code> would drop
+the <code class="code">./</code> under Windows.
+</p></li></ol>
+<p>At this point, the back-end will be running.  From within your IDE, you
+can attach to the process at port 9000 to debug the back-end (including
+breakpoints, etc.).
+</p>
+<p>Remember, however, that you won&rsquo;t be able to use or debug the application until
+the front-end server is started too.
+</p>
+</div>
+</div>
+<div class="subsection-level-extent" id="Application-Code">
+<h4 class="subsection"><span>4.2.2 Application Code<a class="copiable-link" href="#Application-Code"> &para;</a></span></h4>
+
+<p>All communications between the front-end and back-end occur over REST
+services you define.  Each REST service exists in its own
+file or class.  Web methods are methods within those classes.
+</p>
+<p>As architected, directories under <code class="code">src/main/backend</code>
+represent the application&rsquo;s REST services.  Each class/file under that
+directory represents a web service.  The name of the class is the name
+of the web service.
+</p>
+<p>Instance methods within the web service class represent REST methods
+for that web service.  Each web method is passed four arguments as follows:
+</p>
+<dl class="table">
+<dt><code class="code">JSONObject injson</code></dt>
+<dd><p>This represents the data that came from the front-end.
+</p></dd>
+<dt><code class="code">JSONObject outjson</code></dt>
+<dd><p>This represents the data being returned to the front-end.  It is pre-initialized with an empty <code class="code">JSONObject</code>.
+</p></dd>
+<dt><code class="code">Connection db</code></dt>
+<dd><p>This is a pre-opened connection to the defined database (defined in <code class="code">backend/application.ini</code>)
+</p></dd>
+<dt><code class="code">MainServlet servlet</code></dt>
+<dd><p>This is a rarely used servlet context argument.
+</p></dd>
+</dl>
+
+<p>Basically what happens is:
+</p>
+<ol class="enumerate">
+<li> The front-end makes a REST service call.
+</li><li> The <code class="code">Kiss</code> back-end receives the request.
+</li><li> The user gets authenticated.
+</li><li> A new database connection is formed, and a new database transaction is started.
+</li><li> The requested web service is identified (and loaded and compiled if needed).
+</li><li> The <code class="code">outjson</code> object is filled in by the web service that is to be returned to the front-end.
+</li><li> Upon completion of the REST service, <em class="emph">Kiss</em> commits the transaction, closes the database connection, and returns <code class="code">outjson</code> to the front-end.
+</li><li> If, however, the REST service throws an exception, <em class="emph">Kiss</em> rolls back the transaction, closes the database, and sends an error return to the front-end.
+</li></ol>
+
+<p>Additional class and instance methods, that are not web methods, may
+be defined and used within web service classes.
+</p>
+<p>Of course during this process, <code class="code">Kiss</code> handles many possible error conditions.
+</p>
+<a class="anchor" id="cached_005fuser_005fdata"></a></div>
+<div class="subsection-level-extent" id="Cached-User-Data">
+<h4 class="subsection"><span>4.2.3 Cached User Data<a class="copiable-link" href="#Cached-User-Data"> &para;</a></span></h4>
+
+<p>During the login process, user-specific data may be cached.  This
+often occurs in the <code class="code">login</code> Groovy method of the <code class="code">Login</code>
+application-specific class.
+</p>
+<p>Every web service has access to this data via the following method:
+</p>
+<div class="example">
+<pre class="example-preformatted">        servlet.getUserData().getUserData(&quot;dataName&quot;)
+        servlet.getUserData().putUserData(&quot;dataName&quot;, &quot;dataValue&quot;)
+</pre></div>
+
+<p>See <a class="xref" href="#authentication">Authentication</a>
+</p>
+</div>
+<div class="subsection-level-extent" id="Programming-Languages">
+<h4 class="subsection"><span>4.2.4 Programming Languages<a class="copiable-link" href="#Programming-Languages"> &para;</a></span></h4>
+
+<p>At this point, <em class="emph">Kiss</em> supports the development of back-end REST
+services in the Java, Groovy, or Common Lisp languages.  Groovy was
+added first because it was easy, worked with the IDE well, and did all
+that was needed.  (See the document <em class="emph">GroovyOverview</em> included
+with <em class="emph">KISS</em>.) Java was added simply due to its natural
+integration with the rest of the system.
+</p>
+<p>With <em class="emph">Kiss</em>, different web services can be written in different
+languages.  You are not forced to use one or the other.
+</p>
+<p>Common Lisp (ABCL) was added due to this author&rsquo;s love of that
+language.  Unlike Groovy and Java, Lisp has an impedance mismatch with
+the core <em class="emph">Kiss</em> system that is written in Java.  For example, in
+Java, one can have two methods with the same name in the same class
+that differ only by their argument types.  This is not part of the
+Common Lisp language.  Also, the foreign function interface in Lisp
+requires some Lisp code to make the connection clear.  Due to this
+connection code having to run, the Lisp interface is very slow on the
+first call.  It is, however, reasonably fast on all subsequent calls.
+The code that interfaces Java to Lisp is under the
+<code class="code">src/main/core/org/kissweb/lisp</code> directory.
+</p>
+<p>Due to the easy and natural connection between Java and many other JVM
+languages, interfaces to those languages are very easy.  It is
+anticipated that support for many of these other languages (such as
+Scala, Clojure, JRuby, Jython, and Kotlin) will likely follow,
+especially if there are requests.
+</p>
+</div>
+<div class="subsection-level-extent" id="Cron">
+<h4 class="subsection"><span>4.2.5 Cron<a class="copiable-link" href="#Cron"> &para;</a></span></h4>
+
+<p><em class="emph">Kiss</em> has the ability to run any number of commands at specified
+intervals.  For example, you could run a process every hour and
+another process every Tuesday at 3 PM, etc.  This facility echoes 
+the standard Unix or Linux <code class="code">cron</code> facility.
+</p>
+<p>The file that determines what gets run and when is <br>
+<code class="code">src/main/backend/CronTasks/crontab</code>.  All tasks must be in
+the <code class="code">Groovy</code> language and exist in the
+<code class="code">src/main/backend/CronTasks</code> directory.
+</p>
+<p>All contents of the <code class="code">src/main/backend/CronTasks</code> can be changed
+on a running system.  The change will be noticed and take effect.
+There is no need to restart the system.
+</p>
+<p>Look at the files in the <code class="code">src/main/backend/CronTasks</code>
+directory for samples and further documentation.
+</p>
+</div>
+<div class="subsection-level-extent" id="CORS">
+<h4 class="subsection"><span>4.2.6 CORS<a class="copiable-link" href="#CORS"> &para;</a></span></h4>
+
+<p>For security reasons, web servers prevent web services from
+an application that doesn&rsquo;t come from the same origin.  This is
+known as Cross-Origin Resource Sharing or CORS.  <em class="emph">Kiss</em> fully
+supports this security standard. 
+</p>
+<p><em class="emph">Kiss</em> automatically enables full CORS protection in production
+environments and allows CORS in the development environment.
+</p>
+</div>
+<div class="subsection-level-extent" id="Unit-Tests">
+<h4 class="subsection"><span>4.2.7 Unit Tests<a class="copiable-link" href="#Unit-Tests"> &para;</a></span></h4>
+
+<p><em class="emph">Kiss</em> supports <code class="code">jUnit</code> unit tests.  The tests are located
+under the <code class="code">src/test</code> directory.  The directory hierarchy under
+the <code class="code">src/test</code> should mirror that of the <code class="code">src/main</code>
+directory.
+</p>
+<p>Unit tests may be run as follows:
+</p>
+<ol class="enumerate">
+<li> Add or change unit tests or code to be tested.
+</li><li> Build <em class="emph">KissUnitTest.jar</em> by executing:
+<div class="example">
+<pre class="example-preformatted">    ./bld unit-tests
+</pre></div>
+<p>This creates the <code class="code">work/KissUnitTest.jar</code> file which contains
+the entire <em class="emph">Kiss</em> system and unit tests.
+</p></li></ol>
+
+<p>All tests can be run by executing the following command:
+</p><div class="example">
+<pre class="example-preformatted">java -jar work/KissUnitTest.jar  execute \
+  --class-path work/KissUnitTest.jar  --scan-class-path
+</pre></div>
+<p>Alternatively, a single test can be run as follows:
+</p><div class="example">
+<pre class="example-preformatted">java -jar work/KissUnitTest.jar \
+  execute \
+  --class-path work/KissUnitTest.jar \
+  --select-class org.kissweb.IniFileTest
+</pre></div>
+<p>where <code class="code">org.kissweb.IniFileTest</code> is the full path to the desired test.
+</p>
+<a class="anchor" id="Front_002dend-Development"></a></div>
+</div>
+<div class="section-level-extent" id="Front_002dend-Development-1">
+<h3 class="section"><span>4.3 Front-end Development<a class="copiable-link" href="#Front_002dend-Development-1"> &para;</a></span></h3>
+
+<p>A separate server is used so that development files will be served
+rather than the front-end that was present when the back-end server
+was started.  This is the same whether you are using the IDE or
+<em class="emph">bld</em> back-end server modes.
+</p>
+<p>Once the back-end and front-end servers are running, the front-end can
+be debugged through your browser debugger (F12 on Chrome).
+</p>
+<p>In order to make this work, there are two steps that
+need to be followed.
+</p>
+<ol class="enumerate">
+<li> The front-end needs to know where the back-end is located.  This is
+controlled in the file <code class="code">src/main/frontend/index.js</code>.  That file
+contains a line that looks as follows:
+<div class="example">
+<pre class="example-preformatted">    Server.setURL('http://localhost:8080');
+</pre></div>
+<p>As shipped, that setting should be good in most cases.  Adjust as needed.
+</p></li><li> A server needs to be running to serve the front-end code.  The
+<em class="emph">Kiss</em> system comes with a simple server that performs this
+function.  It is in a file named <code class="code">SimpleWebServer.jar</code> on the
+root of the <em class="emph">Kiss</em> system.  From the root of the <em class="emph">Kiss</em>
+system, run the following command to run the front-end server:
+<div class="example">
+<pre class="example-preformatted">   ./serve
+</pre></div>
+<p>or on Windows:
+</p><div class="example">
+<pre class="example-preformatted">   serve.cmd
+</pre></div>
+</li></ol>
+<p>(Source code to this simple server is available at 
+<a class="uref" href="https://github.com/blakemcbride/SimpleWebServer">https://github.com/blakemcbride/SimpleWebServer</a>)
+</p>
+<p>Once the front-end and back-end servers are up, you can access the development
+environment through your browser at <code class="code">http://localhost:8000</code>
+</p>
+<p>If you disable the browser cache through the browser developer console
+settings, changes you make to the front-end will appear by just
+reloading the page.  On Chrome, for example, the browser cache can be
+turned off by going into the page debugger (F12), then
+<code class="code">settings</code>, and then selecting <code class="code">Disable cache (while DevTools
+is open)</code>
+</p>
+<p>You can now develop the front-end portion of your application by
+editing files under the <code class="code">src/main/frontend</code> directory.
+</p>
+<ul class="mini-toc">
+<li><a href="#Mobile-Interface" accesskey="1">Mobile Interface</a></li>
+</ul>
+<div class="subsection-level-extent" id="Mobile-Interface">
+<h4 class="subsection"><span>4.3.1 Mobile Interface<a class="copiable-link" href="#Mobile-Interface"> &para;</a></span></h4>
+
+<p>It is often necessary to support mobile devices.  Although many
+applications support mobile applications through pages that use
+responsive design, it is often the case that the pages are so
+different between various platforms that the use of whole new pages is
+simpler and more effective &ndash; especially for complex screens.
+</p>
+<p>Although <em class="emph">Kiss</em> has always supported responsive design,
+<em class="emph">Kiss</em> also supports the ability to have different pages for
+different platforms.  If you look at <code class="code">src/main/frontend/index.js</code>
+you will see how <code class="code">Kiss</code> handles this.  Basically, <code class="code">Kiss</code>
+detects the platform and loads different pages based on the platform.
+</p>
+
+</div>
+</div>
+<div class="section-level-extent" id="Reports-And-Exports">
+<h3 class="section"><span>4.4 Reports And Exports<a class="copiable-link" href="#Reports-And-Exports"> &para;</a></span></h3>
+
+<p>Creating reports and exports requires both front-end and back-end components.
+The back-end usually creates the file to be sent to the front-end.  It then returns
+a path that the front-end can use to download the file.
+</p>
+<p><em class="emph">Kiss</em> provides the infrastructure needed to support this facility.
+<em class="emph">Kiss</em> also manages and cleans up report files that are no longer needed.
+</p>
+<p>In terms of producing reports, <em class="emph">Kiss</em> leverages the facilities
+provided by the common groff/tbl/mm utilities publicly available.
+These facilities automatically handle paging, titles, page numbering,
+tables, and overall formatting of your reports. See
+<a class="uref" href="https://www.gnu.org/software/groff">https://www.gnu.org/software/groff</a>
+</p>
+<p>In terms of producing CSV export files, see the back-end
+<code class="code">DelimitedFileWriter</code> class.
+</p>
+<p>When files are produced by the back-end, they are sent to the
+front-end by just providing the URL to the file.  At that point, the
+front-end <code class="code">Utils.showReport</code> takes the URL returned by the back-end
+and downloads the file.
+</p>
+<a class="anchor" id="authentication"></a></div>
+<div class="section-level-extent" id="Authentication">
+<h3 class="section"><span>4.5 Authentication<a class="copiable-link" href="#Authentication"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> has built-in authentication.  However, each application has its
+own method of storing and validating users.  Additionally, each application
+may have its own user-specific data it may want to retain between web service
+calls. <em class="emph">Kiss</em> has a generic and easy way of handling these needs.
+</p>
+<p>Application-specific user login and data are handled by the Groovy file
+located in the <code class="code">backend</code> directory named <code class="code">Login.groovy</code>.
+That file must have two methods: <code class="code">login</code> and <code class="code">checkLogin</code>.
+See that file for more details.
+</p>
+<p>By default, authentication requires a SQL database to be configured.
+If no SQL database is configured, the system bypasses authentication
+entirely.  However, if your application uses a non-SQL data store
+for user management, you can enforce authentication by
+setting <code class="code">RequireAuthentication = true</code> in <code class="code">application.ini</code>.
+When enabled, the system calls <code class="code">Login.groovy</code> for authentication
+regardless of whether a SQL database is configured.  Note that the
+<code class="code">db</code> parameter passed to the <code class="code">login</code> and <code class="code">checkLogin</code>
+methods will be <code class="code">null</code> when no SQL database is configured, so
+your <code class="code">Login.groovy</code> must handle this appropriately.
+</p>
+<p>See <a class="xref" href="#cached_005fuser_005fdata">Cached User Data</a>
+</p>
+</div>
+<div class="section-level-extent" id="The-Build-System">
+<h3 class="section"><span>4.6 The Build System<a class="copiable-link" href="#The-Build-System"> &para;</a></span></h3>
+
+<p><em class="emph">Kiss</em> does not use <em class="emph">Ant</em>, <em class="emph">Maven</em>, or <em class="emph">Gradle</em>.
+It includes its own build system called <em class="emph">bld</em>, which is designed
+to handle <em class="emph">Kiss</em>&rsquo; microservice architecture where the core is
+compiled ahead of time but application code is compiled at runtime.
+</p>
+<p><em class="emph">bld</em> is made up of two Java files:
+<code class="code">src/main/core/org/kissweb/BuildUtils.java</code> (framework code,
+do not modify) and <code class="code">src/main/precompiled/Tasks.java</code>
+(application-specific build procedures).  It can download and cache
+dependencies, and only performs work that is needed.  An <em class="emph">Ant</em>
+bridge (<code class="code">build.xml</code>) is included for IDE integration.
+</p>
+<p>When upgrading <em class="emph">Kiss</em> (See <a class="xref" href="System-Setup.html#updates">Kiss Framework Updates</a>),
+<code class="code">Tasks.java</code> is never overwritten, so you must manually reconcile
+any changes.
+</p>
+<p>For a deeper discussion of the build system design and customization,
+see the <em class="emph">Kiss</em> book.
+</p>
+</div>
+<div class="section-level-extent" id="Using-Artificial-Intelligence">
+<h3 class="section"><span>4.7 Using Artificial Intelligence<a class="copiable-link" href="#Using-Artificial-Intelligence"> &para;</a></span></h3>
+
+<p>New AI/LLM systems have appeared (like <em class="emph">Claude Code</em>) that can develop whole applications.
+Fully embracing this new technology, <em class="emph">Kiss</em> now includes files to help facilitate this mode of development.
+In particular, <em class="emph">Kiss</em> includes two files as follows:
+</p>
+<dl class="table">
+<dt><code class="code">AI/KnowledgeBase.md</code></dt>
+<dd><p>This file explains the <em class="emph">Kiss</em> framework to an AI system.
+</p></dd>
+<dt><code class="code">AI/ApplicationDetails.md</code></dt>
+<dd><p>This is a template you can use to describe the application you are building.
+</p></dd>
+</dl>
+
+<p>In order to use these, follow the following steps:
+</p>
+<ol class="enumerate">
+<li> Edit <code class="code">ApplicationDetails.md</code> to describe the application you will be building.
+</li><li> Start up the AI system and tell it to read those two files.
+</li></ol>
+
+<p>From that point, you can instruct the AI to build your application.
+</p>
+<p>You may run <em class="emph">Kiss</em> and test the application while the AI is developing your application.  If any errors appear, feed them to the AI
+and it will fix them.
+</p>
+
+
+
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Front_002dend-API.html">Front-end API</a>, Previous: <a href="Orientation.html">Orientation</a>, Up: <a href="index.html">Kiss Getting Started Guide (May 2, 2026)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

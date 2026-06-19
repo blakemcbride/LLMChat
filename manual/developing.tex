@@ -1,0 +1,500 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 2018 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+@node Developing
+
+@html
+@include style.css
+@end html
+
+@chapter Developing
+
+This section details the development process with @emph{Kiss}.  The
+details provided will be for IntelliJ but can be adapted to other
+IDEs.  The use of an IDE is tremendously beneficial because of the
+graphical debugging and intelligent code completion capabilities.
+
+A typical development environment includes two separate web servers running
+on two different ports (all running on your single development machine).  One serves the back-end REST services, and
+the other serves the front-end HTML, JavaScript, and CSS files.  This
+arrangement allows both front-end and back-end development without any
+compiles, server reboots, file copies, or deployments.  Back-end and
+front-end files can be edited and saved.  Their changes take effect
+immediately.
+
+Of course, in a production environment, only a single web server would be
+utilized, and front-end and back-end changes take effect immediately
+there too.
+
+@section Overview
+
+The following details the normal steps to boot up a development environment.
+Once this environment is set up, it may remain active for the whole day.
+There is rarely any reason to re-build or re-boot the development environment.
+
+Note that all of the command-prompt commands are executed from the
+root of your application.
+
+@enumerate
+@item
+In a command-prompt, type:  @code{./view-log} (not needed on Windows)
+
+This is where back-end messages appear. This command is not needed under Windows.
+@item
+In a second command-prompt, type:  @code{./bld develop} (@code{bld develop} on Windows)
+
+This builds the system and runs the back-end and front-end servers.
+@item
+In the IDE, attach to the Java process at port 9000.
+
+This will allow you to debug the back-end.
+@item
+From your browser, go to @uref{http://localhost:8000}
+
+This is where you view and interact with your application.
+@item
+Open the @emph{Developer tools} from within the browser.
+
+This is where you debug the front-end.
+@item
+Be sure to disable network caching on the browser. (Otherwise, changes you make to
+the front-end will not immediately appear in the browser.)
+@end enumerate
+
+At this point, development, testing, and debugging can occur unabated.
+There should be no need to rebuild or bring anything down.
+
+Front-end changes will appear as soon as you re-load the page on your browser.
+Back-end changes will take effect immediately.
+
+@subsection IDE
+
+While development with @emph{Kiss} does not require an IDE, most
+developers utilize an IDE (Integrated Development Environment).  
+@emph{Kiss} includes an effort to assist with IDE integration
+(such as an @emph{ant} interface to our build system).
+
+See the files under the @code{manual/IDE-Setup} directory for further
+information.
+
+@section Back-end Development
+
+The back-end works differently in development and production
+environments.  Although in both environments back-end and front-end
+changes take effect immediately, the setup of the production environment
+copies all files into the production environment, whereas in a
+development environment the source and production code are split.  In
+order to facilitate rapid and easy development, it is important that
+source files be used rather than the production copies during the
+development process.  
+
+The system automatically detects the location of the application
+source in most configurations.  However, this may be explicitly
+set via a system environment variable (@code{KISS_ROOT}).  The
+value of this environment variable should be the absolute path of the
+root of the application source code.  The directory it indicates
+should have a sub-directory named @code{src/main/backend}.
+
+
+
+@subsection REST Server
+
+There are two different methods of running the back-end REST server as
+follows.
+
+@subsubsection IDE
+
+Running the IDE back-end requires the following:
+
+@enumerate
+@item
+The IDE is completely configured.
+@item
+The system was built with the IDE.
+@end enumerate
+
+Typically, the IDE manages a Tomcat instance and serves up the core
+back-end code serving the REST services.  That code detects that it is
+running under an IDE and re-routes all back-end application files back
+to the source directories.
+
+Although back-end files are edited in source form and run in compiled
+form, back-end code can be debugged (including breakpoints) as if
+it were compiled before the system was booted.
+
+Once the back-end server is up, application files changed under the
+@code{src/main/backend} directory will take effect immediately.
+
+@subsubsection BLD
+
+Utilizing the included @emph{Kiss build system (bld)}, the many steps required 
+to install and configure Tomcat and the IDE are unnecessary.  The whole process
+(for the back-end portion) can be done as follows:
+
+@enumerate
+@item
+From any stage (including having just downloaded the @emph{Kiss} system) type
+the following:  @code{./bld develop}
+
+Note:  Remember that all commands that start with @code{./} would drop
+the @code{./} under Windows.
+@end enumerate
+At this point, the back-end will be running.  From within your IDE, you
+can attach to the process at port 9000 to debug the back-end (including
+breakpoints, etc.).
+
+Remember, however, that you won't be able to use or debug the application until
+the front-end server is started too.
+
+@subsection Application Code
+
+All communications between the front-end and back-end occur over REST
+services you define.  Each REST service exists in its own
+file or class.  Web methods are methods within those classes.
+
+As architected, directories under @code{src/main/backend}
+represent the application's REST services.  Each class/file under that
+directory represents a web service.  The name of the class is the name
+of the web service.
+
+Instance methods within the web service class represent REST methods
+for that web service.  Each web method is passed four arguments as follows:
+
+@table @code
+@item JSONObject injson
+This represents the data that came from the front-end.
+@item JSONObject outjson
+This represents the data being returned to the front-end.  It is pre-initialized with an empty @code{JSONObject}.
+@item Connection db
+This is a pre-opened connection to the defined database (defined in @code{backend/application.ini})
+@item MainServlet servlet
+This is a rarely used servlet context argument.
+@end table
+
+Basically what happens is:
+
+@enumerate
+@item
+The front-end makes a REST service call.
+@item
+The @code{Kiss} back-end receives the request.
+@item
+The user gets authenticated.
+@item
+A new database connection is formed, and a new database transaction is started.
+@item
+The requested web service is identified (and loaded and compiled if needed).
+@item
+The @code{outjson} object is filled in by the web service that is to be returned to the front-end.
+@item
+Upon completion of the REST service, @emph{Kiss} commits the transaction, closes the database connection, and returns @code{outjson} to the front-end.
+@item
+If, however, the REST service throws an exception, @emph{Kiss} rolls back the transaction, closes the database, and sends an error return to the front-end.
+@end enumerate
+
+Additional class and instance methods, that are not web methods, may
+be defined and used within web service classes.
+
+Of course during this process, @code{Kiss} handles many possible error conditions.
+
+@anchor{cached_user_data}
+@subsection Cached User Data
+
+During the login process, user-specific data may be cached.  This
+often occurs in the @code{login} Groovy method of the @code{Login}
+application-specific class.
+
+Every web service has access to this data via the following method:
+
+@example
+        servlet.getUserData().getUserData("dataName")
+        servlet.getUserData().putUserData("dataName", "dataValue")
+@end example
+
+@xref{authentication,,Authentication}
+
+@subsection Programming Languages
+
+At this point, @emph{Kiss} supports the development of back-end REST
+services in the Java, Groovy, or Common Lisp languages.  Groovy was
+added first because it was easy, worked with the IDE well, and did all
+that was needed.  (See the document @emph{GroovyOverview} included
+with @emph{KISS}.) Java was added simply due to its natural
+integration with the rest of the system.
+
+With @emph{Kiss}, different web services can be written in different
+languages.  You are not forced to use one or the other.
+
+Common Lisp (ABCL) was added due to this author's love of that
+language.  Unlike Groovy and Java, Lisp has an impedance mismatch with
+the core @emph{Kiss} system that is written in Java.  For example, in
+Java, one can have two methods with the same name in the same class
+that differ only by their argument types.  This is not part of the
+Common Lisp language.  Also, the foreign function interface in Lisp
+requires some Lisp code to make the connection clear.  Due to this
+connection code having to run, the Lisp interface is very slow on the
+first call.  It is, however, reasonably fast on all subsequent calls.
+The code that interfaces Java to Lisp is under the
+@code{src/main/core/org/kissweb/lisp} directory.
+
+Due to the easy and natural connection between Java and many other JVM
+languages, interfaces to those languages are very easy.  It is
+anticipated that support for many of these other languages (such as
+Scala, Clojure, JRuby, Jython, and Kotlin) will likely follow,
+especially if there are requests.
+
+@subsection Cron
+
+@emph{Kiss} has the ability to run any number of commands at specified
+intervals.  For example, you could run a process every hour and
+another process every Tuesday at 3 PM, etc.  This facility echoes 
+the standard Unix or Linux @code{cron} facility.
+
+The file that determines what gets run and when is @*
+@code{src/main/backend/CronTasks/crontab}.  All tasks must be in
+the @code{Groovy} language and exist in the
+@code{src/main/backend/CronTasks} directory.
+
+All contents of the @code{src/main/backend/CronTasks} can be changed
+on a running system.  The change will be noticed and take effect.
+There is no need to restart the system.
+
+Look at the files in the @code{src/main/backend/CronTasks}
+directory for samples and further documentation.
+
+@subsection CORS
+
+For security reasons, web servers prevent web services from
+an application that doesn't come from the same origin.  This is
+known as Cross-Origin Resource Sharing or CORS.  @emph{Kiss} fully
+supports this security standard. 
+
+@emph{Kiss} automatically enables full CORS protection in production
+environments and allows CORS in the development environment.
+
+@subsection Unit Tests
+
+@emph{Kiss} supports @code{jUnit} unit tests.  The tests are located
+under the @code{src/test} directory.  The directory hierarchy under
+the @code{src/test} should mirror that of the @code{src/main}
+directory.
+
+Unit tests may be run as follows:
+
+@enumerate
+@item
+Add or change unit tests or code to be tested.
+@item
+Build @emph{KissUnitTest.jar} by executing:
+@example
+    ./bld unit-tests
+@end example
+This creates the @code{work/KissUnitTest.jar} file which contains
+the entire @emph{Kiss} system and unit tests.
+@end enumerate
+
+All tests can be run by executing the following command:
+@example
+java -jar work/KissUnitTest.jar  execute \
+  --class-path work/KissUnitTest.jar  --scan-class-path
+@end example
+Alternatively, a single test can be run as follows:
+@example
+java -jar work/KissUnitTest.jar \
+  execute \
+  --class-path work/KissUnitTest.jar \
+  --select-class org.kissweb.IniFileTest
+@end example
+where @code{org.kissweb.IniFileTest} is the full path to the desired test.
+
+@anchor{Front-end Development}
+@section Front-end Development
+
+A separate server is used so that development files will be served
+rather than the front-end that was present when the back-end server
+was started.  This is the same whether you are using the IDE or
+@emph{bld} back-end server modes.
+
+Once the back-end and front-end servers are running, the front-end can
+be debugged through your browser debugger (F12 on Chrome).
+
+In order to make this work, there are two steps that
+need to be followed.
+
+@enumerate
+@item
+The front-end needs to know where the back-end is located.  This is
+controlled in the file @code{src/main/frontend/index.js}.  That file
+contains a line that looks as follows:
+@example
+    Server.setURL('http://localhost:8080');
+@end example
+As shipped, that setting should be good in most cases.  Adjust as needed.
+@item
+A server needs to be running to serve the front-end code.  The
+@emph{Kiss} system comes with a simple server that performs this
+function.  It is in a file named @code{SimpleWebServer.jar} on the
+root of the @emph{Kiss} system.  From the root of the @emph{Kiss}
+system, run the following command to run the front-end server:
+@example
+   ./serve
+@end example
+or on Windows:
+@example
+   serve.cmd
+@end example
+@end enumerate
+(Source code to this simple server is available at 
+@uref{https://github.com/blakemcbride/SimpleWebServer})
+
+Once the front-end and back-end servers are up, you can access the development
+environment through your browser at @code{http://localhost:8000}
+
+If you disable the browser cache through the browser developer console
+settings, changes you make to the front-end will appear by just
+reloading the page.  On Chrome, for example, the browser cache can be
+turned off by going into the page debugger (F12), then
+@code{settings}, and then selecting @code{Disable cache (while DevTools
+is open)}
+
+You can now develop the front-end portion of your application by
+editing files under the @code{src/main/frontend} directory.
+
+@subsection Mobile Interface
+
+It is often necessary to support mobile devices.  Although many
+applications support mobile applications through pages that use
+responsive design, it is often the case that the pages are so
+different between various platforms that the use of whole new pages is
+simpler and more effective -- especially for complex screens.
+
+Although @emph{Kiss} has always supported responsive design,
+@emph{Kiss} also supports the ability to have different pages for
+different platforms.  If you look at @code{src/main/frontend/index.js}
+you will see how @code{Kiss} handles this.  Basically, @code{Kiss}
+detects the platform and loads different pages based on the platform.
+
+
+@section Reports And Exports
+
+Creating reports and exports requires both front-end and back-end components.
+The back-end usually creates the file to be sent to the front-end.  It then returns
+a path that the front-end can use to download the file.
+
+@emph{Kiss} provides the infrastructure needed to support this facility.
+@emph{Kiss} also manages and cleans up report files that are no longer needed.
+
+In terms of producing reports, @emph{Kiss} leverages the facilities
+provided by the common groff/tbl/mm utilities publicly available.
+These facilities automatically handle paging, titles, page numbering,
+tables, and overall formatting of your reports. See
+@uref{https://www.gnu.org/software/groff}
+
+In terms of producing CSV export files, see the back-end
+@code{DelimitedFileWriter} class.
+
+When files are produced by the back-end, they are sent to the
+front-end by just providing the URL to the file.  At that point, the
+front-end @code{Utils.showReport} takes the URL returned by the back-end
+and downloads the file.
+
+@anchor{authentication}
+@section Authentication
+
+@emph{Kiss} has built-in authentication.  However, each application has its
+own method of storing and validating users.  Additionally, each application
+may have its own user-specific data it may want to retain between web service
+calls. @emph{Kiss} has a generic and easy way of handling these needs.
+
+Application-specific user login and data are handled by the Groovy file
+located in the @code{backend} directory named @code{Login.groovy}.
+That file must have two methods: @code{login} and @code{checkLogin}.
+See that file for more details.
+
+By default, authentication requires a SQL database to be configured.
+If no SQL database is configured, the system bypasses authentication
+entirely.  However, if your application uses a non-SQL data store
+for user management, you can enforce authentication by
+setting @code{RequireAuthentication = true} in @code{application.ini}.
+When enabled, the system calls @code{Login.groovy} for authentication
+regardless of whether a SQL database is configured.  Note that the
+@code{db} parameter passed to the @code{login} and @code{checkLogin}
+methods will be @code{null} when no SQL database is configured, so
+your @code{Login.groovy} must handle this appropriately.
+
+@xref{cached_user_data,,Cached User Data}
+
+@section The Build System
+
+@emph{Kiss} does not use @emph{Ant}, @emph{Maven}, or @emph{Gradle}.
+It includes its own build system called @emph{bld}, which is designed
+to handle @emph{Kiss}' microservice architecture where the core is
+compiled ahead of time but application code is compiled at runtime.
+
+@emph{bld} is made up of two Java files:
+@code{src/main/core/org/kissweb/BuildUtils.java} (framework code,
+do not modify) and @code{src/main/precompiled/Tasks.java}
+(application-specific build procedures).  It can download and cache
+dependencies, and only performs work that is needed.  An @emph{Ant}
+bridge (@code{build.xml}) is included for IDE integration.
+
+When upgrading @emph{Kiss} (@xref{updates,Kiss Framework Updates}),
+@code{Tasks.java} is never overwritten, so you must manually reconcile
+any changes.
+
+For a deeper discussion of the build system design and customization,
+see the @emph{Kiss} book.
+
+@section Using Artificial Intelligence
+
+New AI/LLM systems have appeared (like @emph{Claude Code}) that can develop whole applications.
+Fully embracing this new technology, @emph{Kiss} now includes files to help facilitate this mode of development.
+In particular, @emph{Kiss} includes two files as follows:
+
+@table @code
+@item AI/KnowledgeBase.md
+This file explains the @emph{Kiss} framework to an AI system.
+@item AI/ApplicationDetails.md
+This is a template you can use to describe the application you are building.
+@end table
+
+In order to use these, follow the following steps:
+
+@enumerate
+@item
+Edit @code{ApplicationDetails.md} to describe the application you will be building.
+@item Start up the AI system and tell it to read those two files.
+@end enumerate
+
+From that point, you can instruct the AI to build your application.
+
+You may run @emph{Kiss} and test the application while the AI is developing your application.  If any errors appear, feed them to the AI
+and it will fix them.
+
+

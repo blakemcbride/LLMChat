@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Groovy Overview</title>
+
+<meta name="description" content="Groovy Overview">
+<meta name="keywords" content="Groovy Overview">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+
+
+<style>
+body {
+	margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+	background-color: #fffff8; 
+}
+body {
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* dark gray */
+    margin-top: 20px;
+}
+a {
+    color: #007BFF; /* blue */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid #ddd; /* light gray */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* very light gray */
+}
+pre, code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5; /* light grey */
+    border: 1px solid #e0e0e0; /* slightly darker grey for the border */
+    padding: 10px; /* space inside the box */
+    overflow-x: auto; /* adds horizontal scroll if the content is too wide */
+}
+h1 {  /* section titles */
+    color: #2c3e50; /* example dark blue color */
+}
+
+h2, h3, h4 {  /* subsection titles */
+    color: #e74c3c; /* example red color */
+}
+:not(pre) > code {
+    background-color: #f5f5f5; /* Light gray */
+    padding: 2px 4px;  /* Adjust this value */
+    border-radius: 3px; /* Optional: adds rounded corners */
+    margin: 0;  /* Adjust if needed */
+}
+
+</style>
+
+
+
+
+<div class="chapter-level-extent" id="What-is-Groovy_003f">
+<h2 class="chapter"><span>1 What is Groovy?<a class="copiable-link" href="#What-is-Groovy_003f"> &para;</a></span></h2>
+
+
+<p>Groovy is 80+% the same as Java.  If you are a Java programmer, you can
+trivially pick up Groovy.
+</p>
+<p>Like Java, Groovy compiles into JVM code.  Groovy code runs as fast as
+Java.  Groovy can call any Java class, method, jar, package, etc., just
+as if it were straight Java.
+</p>
+<p>Groovy code is sort of an enhanced Java.  It made a lot more sense
+when competing with older versions of Java.  Groovy has several
+hassles compared to Java but also has many conveniences.  On Kiss,
+Groovy code loads a little bit faster.  Once loaded, however, it runs
+at the same speed as compiled Java.
+</p>
+
+</div>
+<div class="chapter-level-extent" id="Why-Groovy_003f">
+<h2 class="chapter"><span>2 Why Groovy?<a class="copiable-link" href="#Why-Groovy_003f"> &para;</a></span></h2>
+<p>Groovy is used for several reasons:
+</p>
+<ol class="enumerate">
+<li> Groovy is only a little different from Java.  For the most part, if
+you know Java, you know Groovy.
+</li><li> Groovy has several language features that make it
+more convenient in many situations.  (Although it also has a few
+annoyances that you need to be mindful of!)
+</li><li> Groovy normally compiles to regular Java class files, runs at full
+speed, and interacts with Java &lt;-&gt; Groovy as if all code were Java or
+Groovy.
+</li><li> Although Groovy can be compiled ahead-of-time just like Java, the
+way Kiss uses it is to compile it at runtime.  This makes loading
+it take longer (although certainly sub-second), but once loaded, it
+runs at the same speed as compiled Java code.  Doing it this way
+has the following advantages:
+<ol class="enumerate" type="a" start="1">
+<li> I can modify the code while the system is running!  The way I
+load files is to check the file date/time.  If it changes, I
+recompile and load it.
+</li><li> It is always clear to me what is dynamic (can be changed on a
+running system) and what is static (compiled ahead of time).
+This way, all Java files are compiled ahead-of-time.  All Groovy files
+are compiled when loaded at runtime.  Note that this is just a
+convention I use and not a limitation of either Java or Groovy.
+</li><li> Interestingly, and for reasons unclear to me, dynamically
+compiling and loading Groovy seems to be
+faster than doing the same thing in Java.
+</li></ol>
+</li></ol>
+
+</div>
+<div class="chapter-level-extent" id="Groovy-_002d_002d-The-Good">
+<h2 class="chapter"><span>3 Groovy &ndash; The Good<a class="copiable-link" href="#Groovy-_002d_002d-The-Good"> &para;</a></span></h2>
+
+<p>Groovy offers many conveniences over Java.  The most commonly used
+in <em class="emph">Kiss</em> development include:
+</p>
+<ol class="enumerate">
+<li> Seamless Java integration &mdash; Groovy can call Java and vice versa
+as if they were the same language.
+</li><li> Multi-line strings with triple quotes (<code class="code">&quot;&quot;&quot;</code>).  Ideal for SQL:
+<div class="example">
+<pre class="example-preformatted">       String sql = &quot;&quot;&quot;select *
+                       from mytable
+                       where field = 'abc'
+                       order by some_field&quot;&quot;&quot;
+</pre></div>
+</li><li> String comparison with <code class="code">==</code> compares contents, not object identity.
+</li><li> Simpler closures/lambdas than Java.
+</li><li> Truthiness: <code class="code">null</code>, <code class="code">0</code>, <code class="code">&quot;&quot;</code>, and <code class="code">[]</code> are all
+treated as <code class="code">false</code>, so <code class="code">if (str)</code> replaces
+<code class="code">if (str != null &amp;&amp; !str.isEmpty())</code>.
+</li><li> String interpolation: <code class="code">&quot;the value is $x&quot;</code>.
+</li><li> Null-safe operator: <code class="code">x?.method()</code> avoids null checks.
+</li><li> Array literals: <code class="code">def a = [1, 2, 3]</code>.
+</li></ol>
+
+<p>For a comprehensive treatment of Groovy&rsquo;s features and how they apply
+to <em class="emph">Kiss</em> development, see the <em class="emph">Kiss</em> book.
+</p>
+</div>
+<div class="chapter-level-extent" id="Groovy-_002d_002d-The-Bad">
+<h2 class="chapter"><span>4 Groovy &ndash; The Bad<a class="copiable-link" href="#Groovy-_002d_002d-The-Bad"> &para;</a></span></h2>
+<p>Groovy has a few pitfalls to be aware of:
+</p>
+<ol class="enumerate">
+<li> Optional semicolons and optional parentheses on method calls can
+reduce readability.
+</li><li> No <code class="code">char</code> type &mdash; <code class="code">'x'</code> is a <code class="code">String</code>.
+Use <code class="code">(char) 'x'</code> or <code class="code">'x' as char</code> when a character is needed.
+</li><li> Floating-point literals like <code class="code">3.14</code> are <code class="code">BigDecimal</code>, not
+<code class="code">double</code>.  Use <code class="code">3.14d</code> to get a <code class="code">double</code>.  This has
+caused many subtle bugs.
+</li></ol>
+
+</div>
+<div class="chapter-level-extent" id="Calling-Groovy-in-KISS">
+<h2 class="chapter"><span>5 Calling Groovy in KISS<a class="copiable-link" href="#Calling-Groovy-in-KISS"> &para;</a></span></h2>
+
+<p>Groovy, like Java, may call compiled Java and Groovy code in the
+normal way.  This is always the case.  However, in <em class="emph">KISS</em>, Groovy
+code is not compiled before the system is started up, as is normally
+the case, but is compiled at runtime when used.  This is to support
+the fact that all Groovy code in <em class="emph">KISS</em> are microservices.
+In <em class="emph">KISS</em>, each Groovy class is an independent microservice.
+This affects how Groovy methods are called in <em class="emph">KISS</em>.
+</p>
+<p>Groovy microservices in <em class="emph">KISS</em> may make three types of calls as follows:
+</p><ol class="enumerate">
+<li> Intra-method Calls &ndash; calls from one method to another in the same class
+</li><li> Compiled Library Calls &ndash; these are calls from Groovy to compiled Java
+code (<em class="emph">KISS</em> core code, Java or Groovy compiled libraries, etc)
+</li><li> Microservice Calls - these are calls from one Groovy method to a Groovy
+method in another class / microservice
+</li></ol>
+<p>In <em class="emph">KISS</em>, the first two types of calls may be performed as you would normally
+perform them.  There are no special considerations.
+</p>
+<p>However type 3 calls require a special procedure.  This is to give <em class="emph">KISS</em>
+an opportunity to compile and load the microservice before it is executed.
+See the main manual and the <em class="emph">Kiss</em> book for more details.
+</p>
+</div>
+
+
+
+</body>
+</html>
