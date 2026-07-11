@@ -7,6 +7,7 @@ tomcat
 libs/c3p0-*.jar
 libs/groovy-*.jar
 libs/javax.servlet-api-*.jar
+libs/jline-*.jar
 libs/log4j-*.jar
 libs/mchange-commons-java-*.jar
 libs/mssql-*.jar
