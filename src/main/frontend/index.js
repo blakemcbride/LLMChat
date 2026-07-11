@@ -9,10 +9,12 @@ Utils.afterComponentsLoaded(function () {
         Server.setURL(SystemInfo.backendUrl);
     } else if (window.location.protocol === "file:") {
         //  electron desktop frontend
-        Server.setURL('http://localhost:8080');
+        //  Electron: LLMChat port block base 8200 -> back end 8201
+        Server.setURL('http://localhost:8201');
     } else if (window.location.protocol === "http:" && window.location.port >= 8000) {
         //  Development environment
-        Server.setURL('http://' + window.location.hostname + ':8080');
+        //  Development: back end runs one port above the front-end dev server
+        Server.setURL('http://' + window.location.hostname + ':' + (Number(window.location.port) + 1));
     } else {
         //  Production environment with front-end & back-end as one unit
         let url = Utils.getAppUrl();
